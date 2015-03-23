@@ -1,4 +1,6 @@
-﻿//this object is similar to Dean's keyboard handling
+﻿//checking git push
+
+//this object is similar to Dean's keyboard handling
 var KeyBoard = (function () {
     var keys = {};
     var handlers = [];
