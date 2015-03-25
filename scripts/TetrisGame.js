@@ -1,5 +1,7 @@
 ﻿var TetrisGame = function () {
 
+    var board;
+
     var moveLeft = function () {
         console.log("moving left");
     }
@@ -26,13 +28,19 @@
         console.log("rotating left");
     }
 
+    var update = function(elapsedTime)
+    {
+
+    }
+
     return {
         moveLeft: moveLeft,
         moveRight: moveRight,
         softDrop: softDrop,
         hardDrop: hardDrop,
         rotateRight: rotateRight,
-        rotateLeft: rotateLeft
+        rotateLeft: rotateLeft,
+        update: update
     };
 
 

@@ -4,21 +4,23 @@ window.addEventListener('load', function () {
     Modernizr.load([
 		{
 		    load: [
-				'preload!scripts/myMath.js',
-				'preload!scripts/BasePhysicsObj.js',
-				'preload!scripts/Physics.js',
-                'preload!scripts/Emitters.js',
-                'preload!scripts/BaseEmitterSpecsObj.js',
-                'preload!scripts/Particles.js',
+				//'preload!scripts/myMath.js',
+				//'preload!scripts/BasePhysicsObj.js',
+				//'preload!scripts/Physics.js',
+                //'preload!scripts/Emitters.js',
+                //'preload!scripts/BaseEmitterSpecsObj.js',
+                //'preload!scripts/Particles.js',
 				'preload!scripts/Screens.js', 
                 //'preload!scripts/AAScreens.js',
 				'preload!scripts/ScreenManager.js', //requires screens.js
+                'preload!scripts/Blocks.js',
+                'preload!scripts/TetrisPieces.js',
                 'preload!scripts/TetrisGame.js',
                 //'preload!scripts/CarGameClocks.js',
                 //'preload!scripts/CarGamePainter.js',
                 //'preload!scripts/CarGameWaiting.js',
                 //'preload!scripts/CarGameScores.js',
-                'preload!scripts/ObjectPainter.js',
+                //'preload!scripts/ObjectPainter.js',
                 //'preload!scripts/AAKeyBoard.js',
                 'preload!scripts/KeyBoard.js', //requires TetrisGame.js
                 'preload!scripts/GameLoop.js' 
