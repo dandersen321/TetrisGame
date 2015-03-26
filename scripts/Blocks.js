@@ -1,11 +1,11 @@
 ﻿var Blocks = new function () {
 
-    var newBlock = function (newR, newC, newColor) {
+    var newBlock = function (newR, newC, newTexture) {
 
         return {
             row: newR,
             col: newC,
-            color: newColor
+            newTexture: newTexture
         };
 
 

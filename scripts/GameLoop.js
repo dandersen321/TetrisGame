@@ -1,5 +1,5 @@
 ﻿//the gameloop of the game, mainly does stuff when game is in a waiting, playing, or lost state
-GameLoop = (function () {
+Tetris.GameLoop = (function () {
     var lastTimeStamp = performance.now();
     //var gameState;
     //var getGameState = function () { return gameState; }

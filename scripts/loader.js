@@ -23,7 +23,7 @@ window.addEventListener('load', function () {
                 //'preload!scripts/ObjectPainter.js',
                 //'preload!scripts/AAKeyBoard.js',
                 'preload!scripts/KeyBoard.js', //requires TetrisGame.js
-                'preload!scripts/GameLoop.js' 
+                'preload!scripts/GameLoop.js' //requires TetrisGame.js
                 
 		    ],
 		    complete: function () {

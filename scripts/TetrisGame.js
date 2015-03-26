@@ -1,30 +1,33 @@
-﻿var TetrisGame = function () {
+﻿var TetrisGame = new Object();
+TetrisGame.Core = function () {
 
     var board;
+    var currentPiece;
+    var nextPiece;
 
-    var moveLeft = function () {
+    var movePieceLeft = function () {
         console.log("moving left");
     }
 
-    var moveRight = function () {
+    var movePieceRight = function () {
         console.log("moving right");
     }
 
-    var softDrop = function()
+    var softPieceDrop = function()
     {
         console.log("soft drop");
     }
 
-    var hardDrop = function()
+    var hardPieceDrop = function()
     {
         console.log("hard drop");
     }
 
-    var rotateRight = function () {
+    var rotatePieceRight = function () {
         console.log("rotating right");
     }
 
-    var rotateLeft = function () {
+    var rotatePieceLeft = function () {
         console.log("rotating left");
     }
 
@@ -34,12 +37,12 @@
     }
 
     return {
-        moveLeft: moveLeft,
-        moveRight: moveRight,
-        softDrop: softDrop,
-        hardDrop: hardDrop,
-        rotateRight: rotateRight,
-        rotateLeft: rotateLeft,
+        movePieceLeft: movePieceLeft,
+        movePieceRight: movePieceRight,
+        softPieceDrop: softPieceDrop,
+        hardPieceDrop: hardPieceDrop,
+        rotatePieceRight: rotatePieceRight,
+        rotatePieceLeft: rotatePieceLeft,
         update: update
     };
 
