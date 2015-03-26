@@ -5,6 +5,9 @@ TetrisGame.Core = function () {
     var getNumberOfBoardRows = function () { return boardRows; };
     var getNumberOfBoardCols = function () { return boardCols; };
 
+    var timeSinceLastMove = 0;
+    var moveLength = 1000;
+
 
     var board = new Array(boardRows);
     for (var i = 0; i < boardRows; i++)
@@ -15,25 +18,50 @@ TetrisGame.Core = function () {
             board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
         }
     }
-    var currentPiece;
+    var currentPiece = null;
     var nextPiece;
 
-    var movePieceLeft = function () {
-        console.log("moving left");
+    var currentPieceMoveLeft = function () {
+        //console.log("moving left");
+        var curListOfBlocks = currentPiece.listOfBlocks;
+        var newCol;
+        for(var i = 0; i < curListOfBlocks.length; ++i)
+        {
+            if (curListOfBlocks[i].col - 1 < 0)
+                return;
+        }
+
+        for (var i = 0; i < curListOfBlocks.length; ++i) {
+            curListOfBlocks[i].col -= 1;
+        }
     }
 
-    var movePieceRight = function () {
-        console.log("moving right");
+    var currentPieceMoveRight = function () {
+        //console.log("moving right");
+        var curListOfBlocks = currentPiece.listOfBlocks;
+        var newCol;
+        for (var i = 0; i < curListOfBlocks.length; ++i) {
+            if (curListOfBlocks[i].col + 1 >= boardCols)
+                return;
+        }
+
+        for (var i = 0; i < curListOfBlocks.length; ++i) {
+            curListOfBlocks[i].col += 1;
+        }
     }
 
-    var softPieceDrop = function()
+    var currentPieceSoftDrop = function ()
     {
-        console.log("soft drop");
+        moveCurrentPiece();
     }
 
-    var hardPieceDrop = function()
+    var currentPieceHardDrop = function ()
     {
-        console.log("hard drop");
+        //console.log("hard drop");
+        while(currentPiece != null)
+        {
+            moveCurrentPiece();
+        }
     }
 
     var rotatePieceRight = function () {
@@ -44,8 +72,52 @@ TetrisGame.Core = function () {
         console.log("rotating left");
     }
 
+    var moveCurrentPiece = function () {
+
+        var curListOfBlocks = currentPiece.listOfBlocks;
+
+        var newRow, newCol;
+
+        for (var i = 0; i < curListOfBlocks.length; ++i)
+        {
+            newRow = curListOfBlocks[i].row - 1;
+            newCol = curListOfBlocks[i].col;
+            if(newRow < 0 || board[newRow][newCol].filled === true)
+            {
+                transferCurrentPieceToBoard();
+                return;
+            }
+        }
+
+        //if this for loop is reached, then the new position is a valid one
+        for (var i = 0; i < curListOfBlocks.length; ++i) {
+            curListOfBlocks[i].row -= 1;
+        }
+    }
+
+    var createCurrentPiece = function () {
+        currentPiece = TetrisPieces.newLBlock();
+    }
+
+    var transferCurrentPieceToBoard = function () {
+        var curListOfBlocks = currentPiece.listOfBlocks;
+        for (var i = 0; i < curListOfBlocks.length; ++i) {
+            board[curListOfBlocks[i].row][curListOfBlocks[i].col] = curListOfBlocks[i];
+        }
+        currentPiece = null;
+    }
+
     var update = function(elapsedTime)
     {
+        timeSinceLastMove += elapsedTime;
+        if(timeSinceLastMove >= moveLength)
+        {
+            timeSinceLastMove = 0;
+            if (currentPiece != null)
+                moveCurrentPiece();
+            else
+                createCurrentPiece();
+        }
         //console.log("tetris game playing!");
     }
 
@@ -53,16 +125,22 @@ TetrisGame.Core = function () {
     {
         //console.log("tetris game rendering!");
         TetrisGame.Renderer.drawBoard(board);
+        
+
+        if(currentPiece != null)
+        {
+            TetrisGame.Renderer.drawPiece(currentPiece);
+        }
     }
 
 
     return {
         getNumberOfBoardCols: getNumberOfBoardCols,
         getNumberOfBoardRows: getNumberOfBoardRows,
-        movePieceLeft: movePieceLeft,
-        movePieceRight: movePieceRight,
-        softPieceDrop: softPieceDrop,
-        hardPieceDrop: hardPieceDrop,
+        currentPieceMoveLeft: currentPieceMoveLeft,
+        currentPieceMoveRight: currentPieceMoveRight,
+        currentPieceSoftDrop: currentPieceSoftDrop,
+        currentPieceHardDrop: currentPieceHardDrop,
         rotatePieceRight: rotatePieceRight,
         rotatePieceLeft: rotatePieceLeft,
         update: update,

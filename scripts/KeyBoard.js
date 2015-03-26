@@ -89,14 +89,14 @@ var KeyBoard = (function () {
 
     var resetControls = function()
     {
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.hardDrop));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.softDrop));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.moveRight));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.moveLeft));
-        KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.hardDrop);
-        KeyBoard.registerEventWithHandler(KeyCodes.ArrowDown, TetrisGame.softDrop);
-        KeyBoard.registerEventWithHandler(KeyCodes.ArrowRight, TetrisGame.moveRight);
-        KeyBoard.registerEventWithHandler(KeyCodes.ArrowLeft, TetrisGame.moveLeft);
+        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceHardDrop));
+        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop));
+        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight));
+        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft));
+        KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.Core.currentPieceHardDrop);
+        KeyBoard.registerEventWithHandler(KeyCodes.ArrowDown, TetrisGame.Core.currentPieceSoftDrop);
+        KeyBoard.registerEventWithHandler(KeyCodes.ArrowRight, TetrisGame.Core.currentPieceMoveRight);
+        KeyBoard.registerEventWithHandler(KeyCodes.ArrowLeft, TetrisGame.Core.currentPieceMoveLeft);
         ControlsScreen.show();
         listenForKeys();
     }
@@ -134,10 +134,10 @@ var KeyCodes = {
     ESC: 27
 };
 
-KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.hardDrop);
-KeyBoard.registerEventWithHandler(KeyCodes.ArrowDown, TetrisGame.softDrop);
-KeyBoard.registerEventWithHandler(KeyCodes.ArrowRight, TetrisGame.moveRight);
-KeyBoard.registerEventWithHandler(KeyCodes.ArrowLeft, TetrisGame.moveLeft);
+KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.Core.currentPieceHardDrop);
+KeyBoard.registerEventWithHandler(KeyCodes.ArrowDown, TetrisGame.Core.currentPieceSoftDrop);
+KeyBoard.registerEventWithHandler(KeyCodes.ArrowRight, TetrisGame.Core.currentPieceMoveRight);
+KeyBoard.registerEventWithHandler(KeyCodes.ArrowLeft, TetrisGame.Core.currentPieceMoveLeft);
 KeyBoard.registerEventWithHandler(KeyCodes.ESC, function () {
     ScreenManager.changeToScreen(ScreenNames.GameMenu);
 });

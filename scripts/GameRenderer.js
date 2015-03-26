@@ -24,14 +24,21 @@
         }
     }
 
-
     var drawBlock = function (block) {
         //(boardRows - r - 1) because 0, 0 is bottom left corner of board
-        context.drawImage(block.newTexture.image, block.col * colWidth, (boardRows - block.row - 1) * rowHeight, colWidth, rowHeight);
+        context.drawImage(block.texture.image, block.col * colWidth, (boardRows - block.row - 1) * rowHeight, colWidth, rowHeight);
+    }
+
+    var drawPiece = function (tetrisPiece) {
+        for(var i = 0; i < tetrisPiece.listOfBlocks.length; ++i)
+        {
+            drawBlock(tetrisPiece.listOfBlocks[i]);
+        }
     }
 
     return {
-        drawBoard: drawBoard
+        drawBoard: drawBoard,
+        drawPiece: drawPiece
     };
 
 }();

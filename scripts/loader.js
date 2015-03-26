@@ -15,8 +15,8 @@ window.addEventListener('load', function () {
                 //'preload!scripts/AAScreens.js',
 				'preload!scripts/ScreenManager.js', //requires Screens.js
                 'preload!scripts/Blocks.js',
-                'preload!scripts/TetrisPieces.js',
-                'preload!scripts/GameCore.js', //requires Textures.js and Blocks.js and TetrisPieces.js
+                'preload!scripts/GameCore.js', //requires Textures.js and Blocks.js
+                'preload!scripts/TetrisPieces.js', //requires GameCore.js                
                 //'preload!scripts/CarGameClocks.js',
                 //'preload!scripts/CarGamePainter.js',
                 //'preload!scripts/CarGameWaiting.js',

@@ -24,7 +24,7 @@ TetrisGame.GameLoop = (function () {
 
         if(gameActive === true)
         {
-            TetrisGame.Core.update();
+            TetrisGame.Core.update(elapsedTime);
         }
     };
 

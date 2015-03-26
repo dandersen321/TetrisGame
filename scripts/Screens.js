@@ -93,10 +93,10 @@ var ControlsScreen = function () {
     }
 
     var updateControls = function () {
-        var hardDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.hardDrop);
-        var softDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.softDrop);
-        var moveRightKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.moveRight);
-        var moveLeftKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.moveLeft);
+        var hardDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceHardDrop);
+        var softDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop);
+        var moveRightKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight);
+        var moveLeftKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft);
 
         //var hardDropKeyName = KeyBoard.getKeyNameFromKeyCode(hardDropKeyCode);
 

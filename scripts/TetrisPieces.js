@@ -1,8 +1,12 @@
 ﻿var TetrisPieces = function () {
 
-    var newBrick = function (listOfBlocks) {
+    var boardRows = TetrisGame.Core.getNumberOfBoardRows();
+    var boardCols = TetrisGame.Core.getNumberOfBoardCols();
+    var boardMiddleCol = boardCols / 2;
+
+    var newBrick = function (newListOfBlocks) {
         var rotation;
-        var listOfBlocks;
+        var listOfBlocks = newListOfBlocks;
 
         var moveLeft = function () {
             console.log("moving left");
@@ -29,13 +33,25 @@
         }
 
         return {
-
-        }
+            listOfBlocks: listOfBlocks,
+            moveLeft: moveLeft,
+            moveRight: moveRight,
+            softDrop: softDrop,
+            hardDrop: hardDrop,
+            rotateRight: rotateRight,
+            rotateLeft: rotateLeft
+        };
     }
 
     var newLBlock = function () {
         var listOfBlocks = new Array();
-        listOfBlocks.push(Block.newBlock(5, 5, Textures.Blue));
+        var bottomLeftCol = boardMiddleCol - 2;
+        listOfBlocks.push(Blocks.newBlock(boardRows - 2, bottomLeftCol, Textures.Blue, true));
+        listOfBlocks.push(Blocks.newBlock(boardRows - 2, bottomLeftCol + 1, Textures.Blue, true));
+        listOfBlocks.push(Blocks.newBlock(boardRows - 2, bottomLeftCol + 2, Textures.Blue, true));
+        listOfBlocks.push(Blocks.newBlock(boardRows - 1, bottomLeftCol + 2, Textures.Blue, true));
+
+        return newBrick(listOfBlocks);
     };
 
     var newTBlock = function () {

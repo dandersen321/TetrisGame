@@ -5,7 +5,7 @@
         return {
             row: newR,
             col: newC,
-            newTexture: newTexture,
+            texture: newTexture,
             filled: amIFilled
         };
 
