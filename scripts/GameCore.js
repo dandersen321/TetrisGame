@@ -2,15 +2,19 @@
 TetrisGame.Core = function () {
     var boardRows = 20;
     var boardCols = 10;
+    var getNumberOfBoardRows = function () { return boardRows; };
+    var getNumberOfBoardCols = function () { return boardCols; };
+
+
     var board = new Array(boardRows);
-    //for (var i = 0; i < boardRows; boardRows++)
-    //{
-    //    board[i] = new Array(boardCols);
-    //    for(var j = 0; j < boardCols; ++j)
-    //    {
-    //        board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
-    //    }
-    //}
+    for (var i = 0; i < boardRows; i++)
+    {
+        board[i] = new Array(boardCols);
+        for(var j = 0; j < boardCols; ++j)
+        {
+            board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
+        }
+    }
     var currentPiece;
     var nextPiece;
 
@@ -42,16 +46,19 @@ TetrisGame.Core = function () {
 
     var update = function(elapsedTime)
     {
-        console.log("tetris game playing!");
+        //console.log("tetris game playing!");
     }
 
     var render = function()
     {
-        console.log("tetris game rendering!");
+        //console.log("tetris game rendering!");
+        TetrisGame.Renderer.drawBoard(board);
     }
 
 
     return {
+        getNumberOfBoardCols: getNumberOfBoardCols,
+        getNumberOfBoardRows: getNumberOfBoardRows,
         movePieceLeft: movePieceLeft,
         movePieceRight: movePieceRight,
         softPieceDrop: softPieceDrop,
