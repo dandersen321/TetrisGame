@@ -1,20 +1,20 @@
 ﻿var Blocks = new function () {
 
-    var newBlock = function (newR, newC, newTexture) {
+    var newBlock = function (newR, newC, newTexture, amIFilled) {
 
         return {
             row: newR,
             col: newC,
-            newTexture: newTexture
+            newTexture: newTexture,
+            filled: amIFilled
         };
 
 
 
     }
 
-    return
-    {
+    return {
         newBlock: newBlock
-    }
+    };
 
 }();

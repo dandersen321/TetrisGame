@@ -1,7 +1,16 @@
 ﻿var TetrisGame = new Object();
 TetrisGame.Core = function () {
-
-    var board;
+    var boardRows = 20;
+    var boardCols = 10;
+    var board = new Array(boardRows);
+    //for (var i = 0; i < boardRows; boardRows++)
+    //{
+    //    board[i] = new Array(boardCols);
+    //    for(var j = 0; j < boardCols; ++j)
+    //    {
+    //        board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
+    //    }
+    //}
     var currentPiece;
     var nextPiece;
 
@@ -33,8 +42,14 @@ TetrisGame.Core = function () {
 
     var update = function(elapsedTime)
     {
-
+        console.log("tetris game playing!");
     }
+
+    var render = function()
+    {
+        console.log("tetris game rendering!");
+    }
+
 
     return {
         movePieceLeft: movePieceLeft,
@@ -43,7 +58,8 @@ TetrisGame.Core = function () {
         hardPieceDrop: hardPieceDrop,
         rotatePieceRight: rotatePieceRight,
         rotatePieceLeft: rotatePieceLeft,
-        update: update
+        update: update,
+        render: render
     };
 
 

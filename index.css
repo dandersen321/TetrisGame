@@ -96,12 +96,12 @@
 
 #gameCanvas
 {
-    width: 1000px;
-    height: 500px;
+    width: 600px;
+    height: 600px;
     margin: auto;
 
     top: 70px;
-    left: calc(100% - 500px);
+    left: calc(100% - 300px);
 
     background-color: lightgreen;
     display: block;

@@ -1,6 +1,12 @@
 ﻿//the gameloop of the game, mainly does stuff when game is in a waiting, playing, or lost state
-Tetris.GameLoop = (function () {
+TetrisGame.GameLoop = (function () {
     var lastTimeStamp = performance.now();
+    var gameActive = false;
+    var setGameActive = function (newGameActive)
+    {
+        gameActive = newGameActive;
+    };
+    var getGameActive = function () { return gameActive; };
     //var gameState;
     //var getGameState = function () { return gameState; }
     //var setGameState = function (newGameState) { gameState = newGameState; }
@@ -14,12 +20,20 @@ Tetris.GameLoop = (function () {
 
     var update = function (currentTimeStamp) {
         var elapsedTime = currentTimeStamp - lastTimeStamp;
-
         KeyBoard.update(elapsedTime);
+
+        if(gameActive === true)
+        {
+            TetrisGame.Core.update();
+        }
     };
 
 
     var render = function () {
+
+        if (gameActive === true) {
+            TetrisGame.Core.render();
+        }
     }
 
     var gameLoop = function () {
@@ -40,7 +54,9 @@ Tetris.GameLoop = (function () {
 
 
     return {
-        intialize: intialize
+        intialize: intialize,
+        setGameActive: setGameActive,
+        getGameActive: getGameActive
         //gameState: gameState,
         //GameState: GameState,
         //getGameState: getGameState,

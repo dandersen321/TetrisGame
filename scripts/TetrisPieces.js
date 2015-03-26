@@ -34,7 +34,8 @@
     }
 
     var newLBlock = function () {
-
+        var listOfBlocks = new Array();
+        listOfBlocks.push(Block.newBlock(5, 5, Textures.Blue));
     };
 
     var newTBlock = function () {

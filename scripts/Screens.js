@@ -49,10 +49,12 @@ var GamePlayingScreen = function () {
     var gameScreenWrapperElem = document.getElementById("gamePlayingScreen");
 
     var show = function () {
+        TetrisGame.GameLoop.setGameActive(true);
         showElem(gameScreenWrapperElem);
     }
 
     var hide = function () {
+        TetrisGame.GameLoop.setGameActive(false);
         hideElem(gameScreenWrapperElem);
     }
 
