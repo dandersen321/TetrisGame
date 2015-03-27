@@ -22,6 +22,8 @@ TetrisGame.Core = function () {
     var nextPiece;
 
     var currentPieceMoveLeft = function () {
+        if (currentPiece == null)
+            return;
         //console.log("moving left");
         var curListOfBlocks = currentPiece.listOfBlocks;
         var newCol;
@@ -38,6 +40,8 @@ TetrisGame.Core = function () {
 
     var currentPieceMoveRight = function () {
         //console.log("moving right");
+        if (currentPiece == null)
+            return;
         var curListOfBlocks = currentPiece.listOfBlocks;
         var newCol;
         for (var i = 0; i < curListOfBlocks.length; ++i) {
@@ -52,11 +56,15 @@ TetrisGame.Core = function () {
 
     var currentPieceSoftDrop = function ()
     {
+        if (currentPiece == null)
+            return;
         moveCurrentPiece();
     }
 
     var currentPieceHardDrop = function ()
     {
+        if (currentPiece == null)
+            return;
         //console.log("hard drop");
         while(currentPiece != null)
         {
