@@ -30,9 +30,10 @@
     }
 
     var drawPiece = function (tetrisPiece) {
-        for(var i = 0; i < tetrisPiece.listOfBlocks.length; ++i)
+        var lob = tetrisPiece.getListOfBlocks();
+        for(var i = 0; i < lob.length; ++i)
         {
-            drawBlock(tetrisPiece.listOfBlocks[i]);
+            drawBlock(lob[i]);
         }
     }
 

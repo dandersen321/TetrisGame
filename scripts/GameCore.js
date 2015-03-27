@@ -2,8 +2,33 @@
 TetrisGame.Core = function () {
     var boardRows = 20;
     var boardCols = 10;
+    var timeUntilRotate = 0;
     var getNumberOfBoardRows = function () { return boardRows; };
     var getNumberOfBoardCols = function () { return boardCols; };
+
+    var bag = [];
+
+    // Add pieces to bag...
+    function initBag() {
+        bag.push(TetrisPieces.newLBlock());
+        bag.push(TetrisPieces.newLBlock());
+        bag.push(TetrisPieces.newTBlock());
+        bag.push(TetrisPieces.newTBlock());
+        bag.push(TetrisPieces.newSquiggly());
+        bag.push(TetrisPieces.newSquiggly());
+        bag.push(TetrisPieces.newSquiggly());
+        bag.push(TetrisPieces.newReverseSquiggly());
+        bag.push(TetrisPieces.newReverseSquiggly());
+        bag.push(TetrisPieces.newReverseSquiggly());
+        bag.push(TetrisPieces.newReverseSquiggly());
+        bag.push(TetrisPieces.newSquare());
+        bag.push(TetrisPieces.newSquare());
+        bag.push(TetrisPieces.newSquare());
+        bag.push(TetrisPieces.newStraight());
+        bag.push(TetrisPieces.newStraight());
+        bag.push(TetrisPieces.newStraight());
+    }
+    //initBag();
 
     var timeSinceLastMove = 0;
     var moveLength = 1000;
@@ -25,7 +50,7 @@ TetrisGame.Core = function () {
         if (currentPiece == null)
             return;
         //console.log("moving left");
-        var curListOfBlocks = currentPiece.listOfBlocks;
+        var curListOfBlocks = currentPiece.getListOfBlocks();
         var newCol;
         for(var i = 0; i < curListOfBlocks.length; ++i)
         {
@@ -33,25 +58,21 @@ TetrisGame.Core = function () {
                 return;
         }
 
-        for (var i = 0; i < curListOfBlocks.length; ++i) {
-            curListOfBlocks[i].col -= 1;
-        }
+        currentPiece.moveLeft();
     }
 
     var currentPieceMoveRight = function () {
         //console.log("moving right");
         if (currentPiece == null)
             return;
-        var curListOfBlocks = currentPiece.listOfBlocks;
+        var curListOfBlocks = currentPiece.getListOfBlocks();
         var newCol;
         for (var i = 0; i < curListOfBlocks.length; ++i) {
             if (curListOfBlocks[i].col + 1 >= boardCols)
                 return;
         }
 
-        for (var i = 0; i < curListOfBlocks.length; ++i) {
-            curListOfBlocks[i].col += 1;
-        }
+        currentPiece.moveRight();
     }
 
     var currentPieceSoftDrop = function ()
@@ -73,7 +94,12 @@ TetrisGame.Core = function () {
     }
 
     var rotatePieceRight = function () {
-        console.log("rotating right");
+        if (currentPiece && timeUntilRotate <= 0)
+        {
+            currentPiece.rotateRight();
+            timeUntilRotate += 500;
+        }
+        // console.log("rotating right");
     }
 
     var rotatePieceLeft = function () {
@@ -82,7 +108,7 @@ TetrisGame.Core = function () {
 
     var moveCurrentPiece = function () {
 
-        var curListOfBlocks = currentPiece.listOfBlocks;
+        var curListOfBlocks = currentPiece.getListOfBlocks();
 
         var newRow, newCol;
 
@@ -98,17 +124,19 @@ TetrisGame.Core = function () {
         }
 
         //if this for loop is reached, then the new position is a valid one
-        for (var i = 0; i < curListOfBlocks.length; ++i) {
-            curListOfBlocks[i].row -= 1;
-        }
+        currentPiece.moveDown();
     }
 
     var createCurrentPiece = function () {
-        currentPiece = TetrisPieces.newLBlock();
+        if (bag.length === 0) {
+            initBag();
+        }
+        currentPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+        //currentPiece = TetrisPieces.newLBlock();
     }
 
     var transferCurrentPieceToBoard = function () {
-        var curListOfBlocks = currentPiece.listOfBlocks;
+        var curListOfBlocks = currentPiece.getListOfBlocks();
         for (var i = 0; i < curListOfBlocks.length; ++i) {
             board[curListOfBlocks[i].row][curListOfBlocks[i].col] = curListOfBlocks[i];
         }
@@ -118,6 +146,10 @@ TetrisGame.Core = function () {
     var update = function(elapsedTime)
     {
         timeSinceLastMove += elapsedTime;
+        if (timeUntilRotate > 0) {
+            timeUntilRotate -= elapsedTime;
+        }
+
         if(timeSinceLastMove >= moveLength)
         {
             timeSinceLastMove = 0;
@@ -154,8 +186,4 @@ TetrisGame.Core = function () {
         update: update,
         render: render
     };
-
-
-
-
 }();

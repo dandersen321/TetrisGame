@@ -97,6 +97,7 @@ var ControlsScreen = function () {
         var softDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop);
         var moveRightKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight);
         var moveLeftKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft);
+        var rotateRightKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.rotatePieceRight);
 
         //var hardDropKeyName = KeyBoard.getKeyNameFromKeyCode(hardDropKeyCode);
 
@@ -112,6 +113,10 @@ var ControlsScreen = function () {
         newInnerHTML += "<li>" + "Move Left: " + moveLeftKeyCode +
             "   <button onclick = \"KeyBoard.changeKeyCodeForFunction(TetrisGame.moveLeft)\">" +
             "Change Key</button></li>";
+        newInnerHTML += '<li>' + 'Rotate: ' + rotateRightKeyCode +
+            '   <button onclick = "KeyBoard.changeKeyCodeForFunction(TetrisGame.rotateRight)">' +
+            'Change Key</button></li>';
+
 
         controlsListElem.innerHTML = newInnerHTML + staticInnerHTMLElem;
         //console.log(hardDropKeyCode);

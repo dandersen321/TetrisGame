@@ -93,10 +93,13 @@ var KeyBoard = (function () {
         unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop));
         unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight));
         unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft));
-        KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.Core.currentPieceHardDrop);
+        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.rotatePieceRight));
+        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.rotatePieceLeft));
+        KeyBoard.registerEventWithHandler(KeyCodes.Spacebar, TetrisGame.Core.currentPieceHardDrop);
         KeyBoard.registerEventWithHandler(KeyCodes.ArrowDown, TetrisGame.Core.currentPieceSoftDrop);
         KeyBoard.registerEventWithHandler(KeyCodes.ArrowRight, TetrisGame.Core.currentPieceMoveRight);
         KeyBoard.registerEventWithHandler(KeyCodes.ArrowLeft, TetrisGame.Core.currentPieceMoveLeft);
+        KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.Core.rotatePieceRight);
         ControlsScreen.show();
         listenForKeys();
     }
@@ -118,6 +121,8 @@ var KeyCodes = {
     ArrowRight: 39,
     ArrowDown: 40,
     ArrowLeft: 37,
+    Enter: 14,
+    Spacebar: 32,
     W: 87,
     D: 68,
     S: 83,
@@ -134,10 +139,11 @@ var KeyCodes = {
     ESC: 27
 };
 
-KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.Core.currentPieceHardDrop);
+KeyBoard.registerEventWithHandler(KeyCodes.Spacebar, TetrisGame.Core.currentPieceHardDrop);
 KeyBoard.registerEventWithHandler(KeyCodes.ArrowDown, TetrisGame.Core.currentPieceSoftDrop);
 KeyBoard.registerEventWithHandler(KeyCodes.ArrowRight, TetrisGame.Core.currentPieceMoveRight);
 KeyBoard.registerEventWithHandler(KeyCodes.ArrowLeft, TetrisGame.Core.currentPieceMoveLeft);
+KeyBoard.registerEventWithHandler(KeyCodes.ArrowUp, TetrisGame.Core.rotatePieceRight);
 KeyBoard.registerEventWithHandler(KeyCodes.ESC, function () {
     ScreenManager.changeToScreen(ScreenNames.GameMenu);
 });

@@ -8,9 +8,7 @@
             texture: newTexture,
             filled: amIFilled
         };
-
-
-
+        
     }
 
     return {
