@@ -52,7 +52,7 @@ TetrisGame.Core = function () {
             moveLeft : newUserMovementTimer(100),
             moveRight : newUserMovementTimer(100),
             softDrop : newUserMovementTimer(100),
-            hardDrop : newUserMovementTimer(100),
+            hardDrop : newUserMovementTimer(300),
             rotateLeft : newUserMovementTimer(200),
             rotateRight : newUserMovementTimer(200),
         };
