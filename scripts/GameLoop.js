@@ -2,6 +2,7 @@
 TetrisGame.GameLoop = (function () {
     var lastTimeStamp = performance.now();
     var gameActive = false;
+
     var setGameActive = function (newGameActive)
     {
         gameActive = newGameActive;

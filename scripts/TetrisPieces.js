@@ -68,61 +68,58 @@
 
     var newLBlock = function () {
         var listOfBlocks = new Array();
-        listOfBlocks.push(Blocks.newBlock(0, -2, Textures.Blue, true));
-        listOfBlocks.push(Blocks.newBlock(0, -1, Textures.Blue, true));
-        listOfBlocks.push(Blocks.newBlock(0, 0, Textures.Blue, true));
-        listOfBlocks.push(Blocks.newBlock(1, 0, Textures.Blue, true));
+        listOfBlocks.push(Blocks.newBlock(0, -2, Textures.L, true));
+        listOfBlocks.push(Blocks.newBlock(0, -1, Textures.L, true));
+        listOfBlocks.push(Blocks.newBlock(0, 0, Textures.L, true));
+        listOfBlocks.push(Blocks.newBlock(1, 0, Textures.L, true));
 
         return newBrick(listOfBlocks);
     };
 
     var newTBlock = function () {
         return newBrick([
-            Blocks.newBlock(0, 0, Textures.Blue, true),
-            Blocks.newBlock(-1, 0, Textures.Blue, true),
-            Blocks.newBlock(1, 0, Textures.Blue, true),
-            Blocks.newBlock(0, 1, Textures.Blue, true)
+            Blocks.newBlock(0, 0, Textures.T, true),
+            Blocks.newBlock(-1, 0, Textures.T, true),
+            Blocks.newBlock(1, 0, Textures.T, true),
+            Blocks.newBlock(0, 1, Textures.T, true)
         ]);
     };
 
     var newSquiggly = function () {
         return newBrick([
-            Blocks.newBlock(-1, 0, Textures.Blue, true),
-            Blocks.newBlock(0, 0, Textures.Blue, true),
-            Blocks.newBlock(0, 1, Textures.Blue, true),
-            Blocks.newBlock(1, 1, Textures.Blue, true)
+            Blocks.newBlock(-1, 0, Textures.S, true),
+            Blocks.newBlock(0, 0, Textures.S, true),
+            Blocks.newBlock(0, 1, Textures.S, true),
+            Blocks.newBlock(1, 1, Textures.S, true)
         ]);
     }
 
     var newReverseSquiggly = function () {
         return newBrick([
-            Blocks.newBlock(-1, 0, Textures.Blue, true),
-            Blocks.newBlock(0, 0, Textures.Blue, true),
-            Blocks.newBlock(0, 1, Textures.Blue, true),
-            Blocks.newBlock(-1, -1, Textures.Blue, true)
+            Blocks.newBlock(-1, 0, Textures.ReverseS, true),
+            Blocks.newBlock(0, 0, Textures.ReverseS, true),
+            Blocks.newBlock(0, 1, Textures.ReverseS, true),
+            Blocks.newBlock(-1, -1, Textures.ReverseS, true)
         ]);
     }
 
     var newSquare = function () {
         return newBrick([
-            Blocks.newBlock(0, 0, Textures.Blue, true),
-            Blocks.newBlock(0, 1, Textures.Blue, true),
-            Blocks.newBlock(1, 1, Textures.Blue, true),
-            Blocks.newBlock(1, 0, Textures.Blue, true)
+            Blocks.newBlock(0, 0, Textures.Square, true),
+            Blocks.newBlock(0, 1, Textures.Square, true),
+            Blocks.newBlock(1, 1, Textures.Square, true),
+            Blocks.newBlock(1, 0, Textures.Square, true)
         ]);
     }
 
     var newStraight = function () {
         return newBrick([
-            Blocks.newBlock(0, 0, Textures.Blue, true),
-            Blocks.newBlock(-1, 0, Textures.Blue, true),
-            Blocks.newBlock(1, 0, Textures.Blue, true),
-            Blocks.newBlock(2, 0, Textures.Blue, true)
+            Blocks.newBlock(0, 0, Textures.Line, true),
+            Blocks.newBlock(-1, 0, Textures.Line, true),
+            Blocks.newBlock(1, 0, Textures.Line, true),
+            Blocks.newBlock(2, 0, Textures.Line, true)
         ]);
     }    
-
-    //etc new blocks ...
-
 
     return {
         newLBlock: newLBlock,
@@ -132,6 +129,5 @@
         newSquare: newSquare,
         newStraight: newStraight
     }
-
 
 }();
