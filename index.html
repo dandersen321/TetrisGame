@@ -1,0 +1,53 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title></title>
+    <link rel="shortcut icon" type="image/x-icon" href="images/Triforce.ico" />
+    <link rel="stylesheet" type="text/css" href="index.css" />
+    <script type="text/javascript" src="scripts/modernizr.js"></script>
+    <script type="text/javascript" src="scripts/loader.js"></script>
+</head>
+<body>
+    <div id="masterGameWrapper">
+        <div id="gameMenuScreen" style="display: none;">
+            <!--<h3>Game Menu</h3>-->
+            <ul id="gameMenu"></ul>
+        </div>
+        <div id="gamePlayingScreen" style="display: none;">
+            <canvas id="gameCanvas" width="1000" height="1000"></canvas>
+        </div>
+        <div id="highScoresScreen" style="display: none;">
+            <!--<h3>HighScores</h3>-->
+            <ul id="highScoresList">
+                <h3 style="text-align: center;">High Scores</h3>
+                <li>Score1</li>
+                <li>Score2</li>
+                <li>Score3</li>
+            </ul>
+            
+        </div>
+        <div id="controlsScreen" style="display: none;">
+            <h3 style="text-align: center;">Controls</h3>
+            <ul id="controlsList">
+            </ul>
+        </div>
+        <div id="creditsScreen" style="display: none;">
+            <img src="images/spock.jpg" /><br />
+            <span>This Game Created By Dylan Andersen and Camerooon Pettersin</span><br />
+            <span>Live Long and Prosper</span>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        <img id="emptyTexture" src="images/emptyTexture1.jpg" />
+        <img id="reverseS" src="images/blueBlock.png" />
+        <img id="s" src="images/greenBlock.png" />
+        <img id="t" src="images/lightBlueBlock.png" />
+        <img id="square" src="images/orangeBlock.png" />
+        <img id="line" src="images/purpleBlock.png" />
+        <img id="l" src="images/redBlock.png" />
+        <img id="reverseL" src="images/yellowBlock.png" />
+    </div>
+
+</body>
+</html>
