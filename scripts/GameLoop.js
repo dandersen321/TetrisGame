@@ -3,62 +3,6 @@ TetrisGame.GameLoop = (function () {
     var lastTimeStamp = performance.now();
     var gameActive = false;
 
-    //var playerEvents = function () {
-    //    return {
-    //        moveLeft: 0,
-    //        moveRight: 1,
-    //        softDrop: 2,
-    //        hardDrop: 3,
-    //        rotateLeft: 4,
-    //        rotateRight: 5
-    //    };
-    //}
-
-    //var playerInput = function () {
-        
-    //    var eventQueue = new Array();
-    //    var moveLeftKeyCode, moveRightKeyCode, rotateRightKeyCode, rotateLeftKeyCode,
-    //        softDropKeyCode, hardDropKeyCode;
-
-    //    var resetControls = function(){
-    //        moveLeftKeyCode = KeyCodes.ARROWLEFT;
-    //        moveRightKeyCode = KeyCodes.ARROWRIGHT;
-    //        softDropKeyCode = KeyCodes.ARROWDOWN;
-    //        hardDropKeyCode = KeyCodes.ARROWUP;
-    //        rotateLeftKeyCode = KeyCodes.Q;
-    //        rotateRightKeyCode = KeyCodes.W;
-    //    }
-
-    //    resetControls();
-
-    //    var keyDown = function(keyCode){
-    //        if (keyCode == moveLeftKeyCode)
-    //            eventQueue.push(playerEvents.moveLeft);
-    //        else if (keyCode == moveRightKeyCode)
-    //            eventQueue.push(playerEvents.moveRight);
-    //        else if(keyCode == softDropKeyCode)
-    //            eventQueue.push(playerEvents.softDrop);
-    //        else if(keyCode == hardDropKeyCode)
-    //            eventQueue.push(playerEvents.hardDrop);
-    //        else if(keyCode == rotateLeftKeyCode)
-    //            eventQueue.push(playerEvents.rotateLeft);
-    //        else if(keyCode == rotateRightKeyCode)
-    //            eventQueue.push(playerEvents.rotateRight);
-    //    }
-
-
-    //    return {
-    //        eventQue: new Array()
-    //    };
-    //}
-
-    //document.onkeydown = function (event) {
-    //    playerInput.keyDown(event.keyCode);
-    //}
-
-
-
-
     var setGameActive = function (newGameActive)
     {
         gameActive = newGameActive;

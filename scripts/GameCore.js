@@ -8,9 +8,44 @@ TetrisGame.Core = function () {
     var timeSinceLastDrop = 0;
     var dropTimeInterval = 1000;
 
-    var timeSinceLastUserMove = 0;
-    var userDelay = 100;
-    
+    var newUserMovementTimer = function(timeDelay){
+
+        var that = {
+            lastTimeCalled: 0,
+            timeDelay: timeDelay
+        };
+
+        that.canPieceMove = function(){
+            if(that.lastTimeCalled > that.timeDelay && currentPiece !=null)
+                return true;
+            else
+                return false;
+        }
+
+        return that;
+    }
+
+    var UserTimers = {
+            moveLeft : newUserMovementTimer(100),
+            moveRight : newUserMovementTimer(100),
+            softDrop : newUserMovementTimer(100),
+            hardDrop : newUserMovementTimer(100),
+            rotateLeft : newUserMovementTimer(100),
+            rotateRight : newUserMovementTimer(100),
+        };
+    //var moveLeftTimer = newUserMovementTimer(100);
+    //var moveRightTimer = newUserMovementTimer(100);
+    //var softDropTimer = newUserMovementTimer(100);
+    //var hardDropTimer = newUserMovementTimer(100);
+    //var rotateLeftTimer = newUserMovementTimer(100);
+    //var rotateRightTimer = newUserMovementTimer(100);
+    //var timeSinceLastUserMoveLeft = 0;
+    //var timeSinceLastUserMoveRight = 0;
+    //var timeSinceLastUserSoftDrop = 0;
+    //var timeSinceLastUserHardDrop = 0;
+    //var timeSinceLastUserRotateLeft = 0;
+    //var timeSinceLastUserRotateRight = 0;
+    //var userDelay = 100;
 
 
     var board = new Array(boardRows);
@@ -25,18 +60,18 @@ TetrisGame.Core = function () {
     var currentPiece = null;
     var nextPiece;
 
-    var shouldPieceBeMovedByUser = function () {
-        if (timeSinceLastUserMove > userDelay && currentPiece != null)
-            return true;
-        else
-            return false;
-    }
+    //var shouldPieceBeMovedByUser = function (UserTimers.moveLeft.timeSinceLastUserMove) {
+    //    if (timeSinceLastUserMove > userDelay && currentPiece != null)
+    //        return true;
+    //    else
+    //        return false;
+    //}
 
     var currentPieceMoveLeft = function () {
-        if (!shouldPieceBeMovedByUser())
-            return;
+        if (UserTimers.moveLeft.canPieceMove())
+            UserTimers.moveLeft.lastTimeCalled = 0;
         else
-            timeSinceLastUserMove = 0;
+            return;
         //console.log("moving left");
         var curListOfBlocks = currentPiece.listOfBlocks;
         var newCol;
@@ -52,10 +87,10 @@ TetrisGame.Core = function () {
     }
 
     var currentPieceMoveRight = function () {
-        if (!shouldPieceBeMovedByUser())
-            return;
+        if (UserTimers.moveRight.canPieceMove())
+            UserTimers.moveRight.lastTimeCalled = 0;
         else
-            timeSinceLastUserMove = 0;
+            return;
         //console.log("moving right");
 
         var curListOfBlocks = currentPiece.listOfBlocks;
@@ -72,19 +107,19 @@ TetrisGame.Core = function () {
 
     var currentPieceSoftDrop = function ()
     {
-        if (!shouldPieceBeMovedByUser())
-            return;
+        if (UserTimers.softDrop.canPieceMove())
+            UserTimers.softDrop.lastTimeCalled = 0;
         else
-            timeSinceLastUserMove = 0;
+            return;
         dropCurrentPiece();
     }
 
     var currentPieceHardDrop = function ()
     {
-        if (!shouldPieceBeMovedByUser())
-            return;
+        if (UserTimers.hardDrop.canPieceMove())
+            UserTimers.hardDrop.lastTimeCalled = 0;
         else
-            timeSinceLastUserMove = 0;
+            return;
         //console.log("hard drop");
         while(currentPiece != null)
         {
@@ -92,21 +127,23 @@ TetrisGame.Core = function () {
         }
     }
 
-    var rotatePieceRight = function () {
-        if (!shouldPieceBeMovedByUser())
-            return;
+    var rotatePieceLeft = function () {
+        if (UserTimers.rotateLeft.canPieceMove())
+            UserTimers.rotateLeft.lastTimeCalled = 0;
         else
-            timeSinceLastUserMove = 0;
+            return;
+        console.log("rotating left");
+    }
+
+    var rotatePieceRight = function () {
+        if (UserTimers.rotateRight.canPieceMove())
+            UserTimers.rotateRight.lastTimeCalled = 0;
+        else
+            return;
         console.log("rotating right");
     }
 
-    var rotatePieceLeft = function () {
-        if (!shouldPieceBeMovedByUser())
-            return;
-        else
-            timeSinceLastUserMove = 0;
-        console.log("rotating left");
-    }
+    
 
     var dropCurrentPiece = function () {
 
@@ -143,10 +180,17 @@ TetrisGame.Core = function () {
         currentPiece = null;
     }
 
+    var updateUserTimers = function (elapsedTime) {
+        for(key in UserTimers)
+        {
+            UserTimers[key].lastTimeCalled += elapsedTime;
+        }
+    }
+
     var update = function(elapsedTime)
     {
         timeSinceLastDrop += elapsedTime;
-        timeSinceLastUserMove += elapsedTime;
+        updateUserTimers(elapsedTime);
         if(timeSinceLastDrop >= dropTimeInterval)
         {
             timeSinceLastDrop = 0;
@@ -178,8 +222,8 @@ TetrisGame.Core = function () {
         currentPieceMoveRight: currentPieceMoveRight,
         currentPieceSoftDrop: currentPieceSoftDrop,
         currentPieceHardDrop: currentPieceHardDrop,
-        rotatePieceRight: rotatePieceRight,
         rotatePieceLeft: rotatePieceLeft,
+        rotatePieceRight: rotatePieceRight,
         update: update,
         render: render
     };

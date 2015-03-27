@@ -1,4 +1,61 @@
-﻿//------------------------------------------------------------------
+﻿//var playerEvents = function () {
+//    return {
+//        moveLeft: 0,
+//        moveRight: 1,
+//        softDrop: 2,
+//        hardDrop: 3,
+//        rotateLeft: 4,
+//        rotateRight: 5
+//    };
+//}
+
+//var playerInput = function () {
+
+//    var eventQueue = new Array();
+//    var getEventQueue = function () { return eventQueue; };
+//    var clearEventQueue = function () { eventQueue.length = 0; };
+//    var moveLeftKeyCode, moveRightKeyCode, rotateRightKeyCode, rotateLeftKeyCode,
+//        softDropKeyCode, hardDropKeyCode;
+
+//    var resetControls = function () {
+//        moveLeftKeyCode = KeyCodes.ARROWLEFT;
+//        moveRightKeyCode = KeyCodes.ARROWRIGHT;
+//        softDropKeyCode = KeyCodes.ARROWDOWN;
+//        hardDropKeyCode = KeyCodes.ARROWUP;
+//        rotateLeftKeyCode = KeyCodes.Q;
+//        rotateRightKeyCode = KeyCodes.W;
+//    }
+
+//    resetControls();
+
+//    var keyDown = function (keyCode) {
+//        if (keyCode == moveLeftKeyCode)
+//            eventQueue.push(playerEvents.moveLeft);
+//        else if (keyCode == moveRightKeyCode)
+//            eventQueue.push(playerEvents.moveRight);
+//        else if (keyCode == softDropKeyCode)
+//            eventQueue.push(playerEvents.softDrop);
+//        else if (keyCode == hardDropKeyCode)
+//            eventQueue.push(playerEvents.hardDrop);
+//        else if (keyCode == rotateLeftKeyCode)
+//            eventQueue.push(playerEvents.rotateLeft);
+//        else if (keyCode == rotateRightKeyCode)
+//            eventQueue.push(playerEvents.rotateRight);
+//    }
+
+
+//    return {
+//        getEventQueue: getEventQueue,
+//        clearEventQueue: clearEventQueue
+//    };
+//}
+
+//document.onkeydown = function (event) {
+//    playerInput.keyDown(event.keyCode);
+//}
+
+
+//------------------------------------------------------------------
 //
 // Source: http://stackoverflow.com/questions/1465374/javascript-event-keycode-constants
 //
