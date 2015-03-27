@@ -169,7 +169,8 @@ TetrisGame.Core = function () {
     }
 
     var createCurrentPiece = function () {
-        currentPiece = TetrisPieces.newLBlock();
+        //currentPiece = TetrisPieces.newLBlock();
+        currentPiece = TetrisPieces.getRandomPiece();
     }
 
     var transferCurrentPieceToBoard = function () {
