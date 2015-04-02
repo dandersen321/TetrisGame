@@ -87,7 +87,7 @@ TetrisGame.Core = function () {
         var newCol;
         for(var i = 0; i < curListOfBlocks.length; ++i)
         {
-            if (curListOfBlocks[i].col - 1 < 0)
+            if (curListOfBlocks[i].col - 1 < 0 || board[curListOfBlocks[i].row][curListOfBlocks[i].col-1].filled === true)
                 return;
         }
 
@@ -103,7 +103,7 @@ TetrisGame.Core = function () {
         var curListOfBlocks = currentPiece.getListOfBlocks();
         var newCol;
         for (var i = 0; i < curListOfBlocks.length; ++i) {
-            if (curListOfBlocks[i].col + 1 >= boardCols)
+            if (curListOfBlocks[i].col + 1 >= boardCols || board[curListOfBlocks[i].row][curListOfBlocks[i].col + 1].filled === true)
                 return;
         }
 
