@@ -331,16 +331,10 @@ TetrisGame.Core = function () {
             playerName = "the nameless one";
         console.log(playerName +" lost with score " + playerScore);
 
-        angular.module('postHighScores', []).run(function ($http) {
-            $http.post('/api/high-scores', { "name": "yolo", "score": playerScore }).
-                success(function (data, status, headers, config) {
-                    console.log("success!");
-                    console.log(data.result);
-                    //$scope.highscores = data.result;
-                }).
-                error(function (data, status, headers, config) {
-                    console.log('Error posting highscore - ' + JSON.stringify(data));
-                });
+        $.post('/api/high-scores', { name: playerName, score: playerScore }, function (data, status) {
+            console.log('Data: ' + JSON.stringify(data) + ', status: ' + JSON.stringify(status));
+        }).fail(function (jqxhr, text, err) {
+            console.log('FAIL! ' + JSON.stringify(err));
         });
         
         TetrisGame.GameLoop.setGameActive(false);

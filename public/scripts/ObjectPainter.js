@@ -16,7 +16,7 @@
         context.save();
 
         var objX = obj.getX();
-        var objY = obj.getY();
+        var objY = height - obj.getY();
 
         var rotationInRads = Math.asin(Math.abs(obj.getYVector()));
         var quadNumber = getQuadrant(obj.getXVector(), obj.getYVector());
@@ -42,7 +42,7 @@
         //context.translate(-objX, -objY);
 
         //context.drawImage(obj.image, obj.getX() - obj.getWidth() / 2, height - obj.getY() - obj.getHeight() / 2, obj.getWidth(), obj.getHeight());
-        context.drawImage(obj.image, objX - obj.getWidth() / 2, height - objY + objY / 2, obj.getWidth(), obj.getHeight());
+        context.drawImage(obj.image, objX - obj.getWidth() / 2, objY + obj.getHeight() / 2, obj.getWidth(), obj.getHeight());
         //context.drawImage(obj.image, obj.getX() - obj.getWidth() / 2, height - 20 / 2, 5, 5);
 
 
