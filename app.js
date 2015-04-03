@@ -35,7 +35,8 @@ app.post('/api/high-scores', function (req, res) {
                 console.log(data);
                 var t = JSON.parse(data).d;
                 t.push(req.body);
-                t = t.sort(function (a, b) { return a.score < b.score; }).splice(0, 10);
+                t = t.sort(function (a, b) {return parseInt(b.score) - parseInt(a.score); }).splice(0, 10);
+				
                 fs.writeFile(__dirname + '/database.json.db.txt', JSON.stringify({'d': t}), { encoding: 'utf-8' }, function (err) {
                     if (err) res.status(400).send(err);
                     else res.send({'success': true});
