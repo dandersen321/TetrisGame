@@ -25,7 +25,8 @@ window.addEventListener('load', function () {
                 //'preload!scripts/AAKeyBoard.js',
                 'preload!scripts/KeyBoard.js', //requires TetrisGame.js
                 'preload!scripts/GameLoop.js', //requires TetrisGame.js
-                'preload!scripts/GameRenderer.js' //requires TetrisGame.js
+                'preload!scripts/GameRenderer.js', //requires TetrisGame.js
+				'preload!scripts/jquery-1.11.2.min.js'
                 
 		    ],
 		    complete: function () {
@@ -37,3 +38,12 @@ window.addEventListener('load', function () {
 		}
     ]);
 }, false);
+
+// TESTING THIS
+/*
+ $.post('/api/high-scores', { name: 'Kamaron', score: 50 }, function (data, status) {
+ console.log('Data: ' + JSON.stringify(data) + ', status: ' + JSON.stringify(status));
+ }).fail(function (jqxhr, text, err) {
+ console.log('FAIL! ' + JSON.stringify(err));
+ });
+ */

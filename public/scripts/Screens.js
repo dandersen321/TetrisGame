@@ -69,11 +69,11 @@ var HighScoresScreen = function () {
 
     var show = function () {
         showElem(highScoresWrapperElem);
-    }
+    };
 
     var hide = function () {
         hideElem(highScoresWrapperElem);
-    }
+    };
 
     return {
         show: show,

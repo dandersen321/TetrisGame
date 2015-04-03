@@ -1,11 +1,13 @@
 ﻿<!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml">
+<html xmlns="http://www.w3.org/1999/xhtml" ng-app="tetris-app">
 <head>
     <title></title>
     <link rel="shortcut icon" type="image/x-icon" href="images/Triforce.ico" />
     <link rel="stylesheet" type="text/css" href="index.css" />
     <script type="text/javascript" src="../scripts/modernizr.js"></script>
     <script type="text/javascript" src="../scripts/loader.js"></script>
+    <script type="text/javascript" src="/scripts/angular.min.js"></script>
+    <script type="text/javascript" src="/scripts/controllers.js"></script>
 </head>
 <body>
     <div id="masterGameWrapper">
@@ -16,13 +18,11 @@
         <div id="gamePlayingScreen" style="display: none;">
             <canvas id="gameCanvas" width="1000" height="1000"></canvas>
         </div>
-        <div id="highScoresScreen" style="display: none;">
+        <div id="highScoresScreen" style="display: none;" ng-controller="high-scores">
             <!--<h3>HighScores</h3>-->
-            <ul id="highScoresList">
-                <h3 style="text-align: center;">High Scores</h3>
-                <li>Score1</li>
-                <li>Score2</li>
-                <li>Score3</li>
+            <h3 style="text-align: center;">High Scores</h3>
+            <ul id="highScoresList" ng-repeat="highscore in highscores">
+                <li>{{highscore.name}}: {{highscore.score}}</li>
             </ul>
             
         </div>
