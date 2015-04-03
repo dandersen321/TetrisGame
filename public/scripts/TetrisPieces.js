@@ -53,7 +53,7 @@
         var getListOfBlocks = function () {
             var tr = [];
             for (var i = 0; i < listOfBlocks.length; i++) {
-                tr.push(Blocks.newBlock(r + listOfBlocks[i].row, c + listOfBlocks[i].col, listOfBlocks[i].texture, listOfBlocks[i].filled));
+                tr.push(Blocks.newBlock(r + listOfBlocks[i].row, c + listOfBlocks[i].col + 1, listOfBlocks[i].texture, listOfBlocks[i].filled));
             }
             return tr;
         }
