@@ -1,1 +1,1 @@
-{"d": [{"name":"Kamaron Peterson","score":90},{"name":"Ryan Hermanson","score":85},{"name":"Dylan Andersen","score":5}]}
+{"d":[{"name":"Kamaron Peterson","score":0},{"name":"Ryan Hermanson","score":0},{"name":"Kamaron","score":"0"},{"name":"Dylan Andersen","score":0}]}

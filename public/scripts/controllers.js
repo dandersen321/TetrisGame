@@ -13,4 +13,5 @@ tetris_app.controller('high-scores', function ($scope, $http) {
         error(function (data, status, headers, config) {
             console.log('Error retriving highscores - ' + JSON.stringify(data));
         });
+    // TODO KIP: When recording a score, also re-gather scores here.
 });

@@ -40,10 +40,10 @@ window.addEventListener('load', function () {
 }, false);
 
 // TESTING THIS
-/*
- $.post('/api/high-scores', { name: 'Kamaron', score: 50 }, function (data, status) {
- console.log('Data: ' + JSON.stringify(data) + ', status: ' + JSON.stringify(status));
- }).fail(function (jqxhr, text, err) {
- console.log('FAIL! ' + JSON.stringify(err));
- });
- */
+//function () {
+//    $.post('/api/high-scores', { name: 'Kamaron', score: 50 }, function (data, status) {
+//        console.log('Data: ' + JSON.stringify(data) + ', status: ' + JSON.stringify(status));
+//    }).fail(function (jqxhr, text, err) {
+//        console.log('FAIL! ' + JSON.stringify(err));
+//    });
+//}
