@@ -18,6 +18,8 @@ TetrisGame.Core = function () {
 
         bag.push(TetrisPieces.newLBlock());
         bag.push(TetrisPieces.newLBlock());
+        bag.push(TetrisPieces.newReverseLBlock());
+        bag.push(TetrisPieces.newReverseLBlock());
         bag.push(TetrisPieces.newTBlock());
         bag.push(TetrisPieces.newTBlock());
         bag.push(TetrisPieces.newSquiggly());

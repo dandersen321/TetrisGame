@@ -81,6 +81,17 @@
         return newBrick(listOfBlocks);
     };
 
+    var newReverseLBlock = function () {
+
+        var listOfBlocks = new Array();
+        listOfBlocks.push(Blocks.newBlock(1, -2, Textures.ReverseL, true));
+        listOfBlocks.push(Blocks.newBlock(1, -1, Textures.ReverseL, true));
+        listOfBlocks.push(Blocks.newBlock(1, 0, Textures.ReverseL, true));
+        listOfBlocks.push(Blocks.newBlock(0, 0, Textures.ReverseL, true));
+
+        return newBrick(listOfBlocks);
+    }
+
     var newTBlock = function () {
         return newBrick([
             Blocks.newBlock(0, 0, Textures.T, true),
@@ -128,6 +139,7 @@
 
     return {
         newLBlock: newLBlock,
+        newReverseLBlock: newReverseLBlock,
         newTBlock: newTBlock,
         newSquiggly: newSquiggly,
         newReverseSquiggly: newReverseSquiggly,
