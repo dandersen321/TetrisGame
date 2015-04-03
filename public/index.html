@@ -4,10 +4,10 @@
     <title></title>
     <link rel="shortcut icon" type="image/x-icon" href="images/Triforce.ico" />
     <link rel="stylesheet" type="text/css" href="index.css" />
-    <script type="text/javascript" src="../scripts/modernizr.js"></script>
-    <script type="text/javascript" src="../scripts/loader.js"></script>
-    <script type="text/javascript" src="/scripts/angular.min.js"></script>
-    <script type="text/javascript" src="/scripts/controllers.js"></script>
+    <script type="text/javascript" src="scripts/modernizr.js"></script>
+    <script type="text/javascript" src="scripts/loader.js"></script>
+    <script type="text/javascript" src="scripts/angular.min.js"></script>
+    <script type="text/javascript" src="scripts/controllers.js"></script>
 </head>
 <body>
     <div id="masterGameWrapper">
@@ -16,7 +16,8 @@
             <ul id="gameMenu"></ul>
         </div>
         <div id="gamePlayingScreen" style="display: none;">
-            <canvas id="gameCanvas" width="1000" height="1000"></canvas>
+            <canvas id="gameCanvas" width="400" height="600"></canvas>
+            <canvas id="gameUpdateCanvas" width="200" height="600"></canvas>
         </div>
         <div id="highScoresScreen" style="display: none;" ng-controller="high-scores">
             <!--<h3>HighScores</h3>-->

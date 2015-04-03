@@ -3,6 +3,8 @@ var KeyBoard = (function () {
     var keys = {};
     var handlers = [];
 
+    var moveMadeThisPress = false;
+
     var listenForKeys = function()
     {
         document.onkeydown = function (event) {
@@ -10,6 +12,7 @@ var KeyBoard = (function () {
         }
 
         document.onkeyup = function (event) {
+            moveMadeThisPress = false;
             delete keys[event.keyCode];
         }
     }
@@ -87,35 +90,106 @@ var KeyBoard = (function () {
         
     }
 
+    var intializeControls = function () {
+        KeyBoard.registerEventWithHandler(KeyCodes.ESCAPE, function () {
+            ScreenManager.changeToScreen(ScreenNames.GameMenu);
+        });
+
+        keyBoardFunctions[KeyCodes.ARROWUP] = callHardDrop;
+        keyBoardFunctions[KeyCodes.ARROWDOWN] = callSoftDrop;
+        keyBoardFunctions[KeyCodes.ARROWRIGHT] = callMoveRight;
+        keyBoardFunctions[KeyCodes.ARROWLEFT] = callMoveLeft;
+        keyBoardFunctions[KeyCodes.Q] = callRotateLeft;
+        keyBoardFunctions[KeyCodes.W] = callRotateRight;
+
+        for (var key in keyBoardFunctions) {
+            KeyBoard.registerEventWithHandler(key, keyBoardFunctions[key]);
+        }
+    }
+
     var resetControls = function()
     {
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceHardDrop));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.rotatePieceRight));
-        unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(TetrisGame.Core.rotatePieceLeft));
-        KeyBoard.registerEventWithHandler(KeyCodes.ARROWUP, TetrisGame.Core.currentPieceHardDrop);
-        KeyBoard.registerEventWithHandler(KeyCodes.ARROWDOWN, TetrisGame.Core.currentPieceSoftDrop);
-        KeyBoard.registerEventWithHandler(KeyCodes.ARROWRIGHT, TetrisGame.Core.currentPieceMoveRight);
-        KeyBoard.registerEventWithHandler(KeyCodes.ARROWLEFT, TetrisGame.Core.currentPieceMoveLeft);
-        KeyBoard.registerEventWithHandler(KeyCodes.Q, TetrisGame.Core.rotatePieceLeft);
-        KeyBoard.registerEventWithHandler(KeyCodes.W, TetrisGame.Core.rotatePieceRight);
+      
+        for (var key in keyBoardFunctions)
+        {
+            unregisterEventHandlerGivenKeyCode(getKeyCodeForFunction(keyBoardFunctions[key]));
+        }
+
+        intializeControls();
+
         ControlsScreen.show();
         listenForKeys();
     }
+
+    var keyBoardFunctions = {};
+
+    var callHardDrop = function () {
+        if (moveMadeThisPress == false)
+        {
+            moveMadeThisPress = true;
+            TetrisGame.Core.currentPieceHardDrop();
+        }
+            
+    };
+
+    var callSoftDrop = function () {
+        if (moveMadeThisPress == false) {
+            moveMadeThisPress = true;
+            TetrisGame.Core.currentPieceSoftDrop();
+        }
+    }
+
+    var callMoveRight = function () {
+        if (moveMadeThisPress == false) {
+            moveMadeThisPress = true;
+            TetrisGame.Core.currentPieceMoveRight();
+        }
+        
+    }
+
+    var callMoveLeft = function () {
+        if (moveMadeThisPress == false) {
+            moveMadeThisPress = true;
+            TetrisGame.Core.currentPieceMoveLeft();
+        }
+        
+    }
+
+    var callRotateLeft = function () {
+        if (moveMadeThisPress == false) {
+            moveMadeThisPress = true;
+            TetrisGame.Core.rotatePieceLeft();
+        }
+        
+    }
+
+    var callRotateRight = function () {
+        if (moveMadeThisPress == false) {
+            moveMadeThisPress = true;
+            TetrisGame.Core.rotatePieceRight();
+        }
+        
+    }
+
+
+
+
+    
 
     return {
         registerEventWithHandler: registerEventWithHandler,
         update: update,
         getKeyCodeForFunction: getKeyCodeForFunction,
         changeKeyCodeForFunction: changeKeyCodeForFunction,
-        resetControls: resetControls
-    }
+        resetControls: resetControls,
+        intializeControls: intializeControls
+    };
 
 
 
 })();
+
+
 
 //------------------------------------------------------------------
 //
@@ -262,12 +336,14 @@ var KeyCodes = {
 //    N: 78,
 //    ESC: 27
 //};
-KeyBoard.registerEventWithHandler(KeyCodes.ARROWUP, TetrisGame.Core.currentPieceHardDrop);
-KeyBoard.registerEventWithHandler(KeyCodes.ARROWDOWN, TetrisGame.Core.currentPieceSoftDrop);
-KeyBoard.registerEventWithHandler(KeyCodes.ARROWRIGHT, TetrisGame.Core.currentPieceMoveRight);
-KeyBoard.registerEventWithHandler(KeyCodes.ARROWLEFT, TetrisGame.Core.currentPieceMoveLeft);
-KeyBoard.registerEventWithHandler(KeyCodes.Q, TetrisGame.Core.rotatePieceLeft);
-KeyBoard.registerEventWithHandler(KeyCodes.W, TetrisGame.Core.rotatePieceRight);
-KeyBoard.registerEventWithHandler(KeyCodes.ESCAPE, function () {
-    ScreenManager.changeToScreen(ScreenNames.GameMenu);
-});
+//KeyBoard.registerEventWithHandler(KeyCodes.ARROWUP, TetrisGame.Core.currentPieceHardDrop);
+//KeyBoard.registerEventWithHandler(KeyCodes.ARROWDOWN, TetrisGame.Core.currentPieceSoftDrop);
+//KeyBoard.registerEventWithHandler(KeyCodes.ARROWRIGHT, TetrisGame.Core.currentPieceMoveRight);
+//KeyBoard.registerEventWithHandler(KeyCodes.ARROWLEFT, TetrisGame.Core.currentPieceMoveLeft);
+//KeyBoard.registerEventWithHandler(KeyCodes.Q, TetrisGame.Core.rotatePieceLeft);
+//KeyBoard.registerEventWithHandler(KeyCodes.W, TetrisGame.Core.rotatePieceRight);
+//KeyBoard.registerEventWithHandler(KeyCodes.ESCAPE, function () {
+//    ScreenManager.changeToScreen(ScreenNames.GameMenu);
+//});
+
+KeyBoard.intializeControls();

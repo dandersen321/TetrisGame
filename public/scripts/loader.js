@@ -4,12 +4,13 @@ window.addEventListener('load', function () {
     Modernizr.load([
 		{
 		    load: [
-				//'preload!scripts/myMath.js',
-				//'preload!scripts/BasePhysicsObj.js',
-				//'preload!scripts/Physics.js',
-                //'preload!scripts/Emitters.js',
-                //'preload!scripts/BaseEmitterSpecsObj.js',
-                //'preload!scripts/Particles.js',
+				'preload!scripts/myMath.js',
+				'preload!scripts/BasePhysicsObj.js',
+				'preload!scripts/Physics.js',
+                'preload!scripts/Emitters.js',
+                'preload!scripts/BaseEmitterSpecsObj.js',
+                'preload!scripts/Particles.js',
+                'preload!scripts/ObjectPainter.js',
                 'preload!scripts/Textures.js',
 				'preload!scripts/Screens.js', 
                 //'preload!scripts/AAScreens.js',

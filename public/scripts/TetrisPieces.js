@@ -119,10 +119,10 @@
 
     var newStraight = function () {
         return newBrick([
-            Blocks.newBlock(0, 0, Textures.Line, true),
             Blocks.newBlock(-1, 0, Textures.Line, true),
-            Blocks.newBlock(1, 0, Textures.Line, true),
-            Blocks.newBlock(2, 0, Textures.Line, true)
+            Blocks.newBlock(-2, 0, Textures.Line, true),
+            Blocks.newBlock(0, 0, Textures.Line, true),
+            Blocks.newBlock(1, 0, Textures.Line, true)
         ]);
     }    
 

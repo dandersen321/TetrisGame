@@ -6,10 +6,16 @@ TetrisGame.Core = function () {
     var getNumberOfBoardRows = function () { return boardRows; };
     var getNumberOfBoardCols = function () { return boardCols; };
 
+    var playerScore = 0;
+
     var bag = [];
 
     // Add pieces to bag...
     function initBag() {
+        //bag.push(TetrisPieces.newStraight());
+        //bag.push(TetrisPieces.newStraight());
+        //bag.push(TetrisPieces.newStraight());
+
         bag.push(TetrisPieces.newLBlock());
         bag.push(TetrisPieces.newLBlock());
         bag.push(TetrisPieces.newTBlock());
@@ -31,31 +37,31 @@ TetrisGame.Core = function () {
     var timeSinceLastDrop = 0;
     var dropTimeInterval = 1000;
 
-    var newUserMovementTimer = function(timeDelay){
+    //var newUserMovementTimer = function(timeDelay){
 
-        var that = {
-            lastTimeCalled: 0,
-            timeDelay: timeDelay
-        };
+    //    var that = {
+    //        lastTimeCalled: 0,
+    //        timeDelay: timeDelay
+    //    };
 
-        that.canPieceMove = function(){
-            if(that.lastTimeCalled > that.timeDelay && currentPiece !=null)
-                return true;
-            else
-                return false;
-        }
+    //    that.canPieceMove = function(){
+    //        if(that.lastTimeCalled > that.timeDelay && currentPiece !=null)
+    //            return true;
+    //        else
+    //            return false;
+    //    }
 
-        return that;
-    }
+    //    return that;
+    //}
 
-    var UserTimers = {
-            moveLeft : newUserMovementTimer(100),
-            moveRight : newUserMovementTimer(100),
-            softDrop : newUserMovementTimer(100),
-            hardDrop : newUserMovementTimer(300),
-            rotateLeft : newUserMovementTimer(200),
-            rotateRight : newUserMovementTimer(200),
-        };
+    //var UserTimers = {
+    //        moveLeft : newUserMovementTimer(100),
+    //        moveRight : newUserMovementTimer(100),
+    //        softDrop : newUserMovementTimer(100),
+    //        hardDrop : newUserMovementTimer(300),
+    //        rotateLeft : newUserMovementTimer(200),
+    //        rotateRight : newUserMovementTimer(200),
+    //    };
 
 
     var board = new Array(boardRows);
@@ -78,10 +84,12 @@ TetrisGame.Core = function () {
     //}
 
     var currentPieceMoveLeft = function () {
-        if (UserTimers.moveLeft.canPieceMove())
-            UserTimers.moveLeft.lastTimeCalled = 0;
-        else
+        if (currentPiece == null)
             return;
+        //if (UserTimers.moveLeft.canPieceMove())
+        //    UserTimers.moveLeft.lastTimeCalled = 0;
+        //else
+        //    return;
         //console.log("moving left");
         var curListOfBlocks = currentPiece.getListOfBlocks();
         var newCol;
@@ -95,9 +103,11 @@ TetrisGame.Core = function () {
     }
 
     var currentPieceMoveRight = function () {
-        if (UserTimers.moveRight.canPieceMove())
-            UserTimers.moveRight.lastTimeCalled = 0;
-        else
+        //if (UserTimers.moveRight.canPieceMove())
+        //    UserTimers.moveRight.lastTimeCalled = 0;
+        //else
+        // return;
+        if (currentPiece == null)
             return;
 
         var curListOfBlocks = currentPiece.getListOfBlocks();
@@ -112,20 +122,24 @@ TetrisGame.Core = function () {
 
     var currentPieceSoftDrop = function ()
     {
-        if (UserTimers.softDrop.canPieceMove())
-            UserTimers.softDrop.lastTimeCalled = 0;
-        else
+        //if (UserTimers.softDrop.canPieceMove())
+        //    UserTimers.softDrop.lastTimeCalled = 0;
+        //else
+        //    return;
+        if (currentPiece == null)
             return;
         dropCurrentPiece();
     }
 
     var currentPieceHardDrop = function ()
     {
-        if (UserTimers.hardDrop.canPieceMove())
-            UserTimers.hardDrop.lastTimeCalled = 0;
-        else
-            return;
+        //if (UserTimers.hardDrop.canPieceMove())
+        //    UserTimers.hardDrop.lastTimeCalled = 0;
+        //else
+        //    return;
         //console.log("hard drop");
+        if (currentPiece == null)
+            return;
         while(currentPiece != null)
         {
             dropCurrentPiece();
@@ -133,9 +147,11 @@ TetrisGame.Core = function () {
     }
 
     var rotatePieceLeft = function () {
-        if (UserTimers.rotateLeft.canPieceMove())
-            UserTimers.rotateLeft.lastTimeCalled = 0;
-        else
+        //if (UserTimers.rotateLeft.canPieceMove())
+        //    UserTimers.rotateLeft.lastTimeCalled = 0;
+        //else
+        //    return;
+        if (currentPiece == null)
             return;
 
         currentPiece.rotateLeft();
@@ -143,13 +159,15 @@ TetrisGame.Core = function () {
     }
 
     var rotatePieceRight = function () {
-        if (UserTimers.rotateRight.canPieceMove() && currentPiece)
-        {
-            UserTimers.rotateRight.lastTimeCalled = 0;
-            currentPiece.rotateRight();
-            timeUntilRotate += 500; //<-- what is this for?
-        }
-        else
+        //if (UserTimers.rotateRight.canPieceMove() && currentPiece)
+        //{
+        //    UserTimers.rotateRight.lastTimeCalled = 0;
+        //    currentPiece.rotateRight();
+        //    timeUntilRotate += 500; //<-- what is this for?
+        //}
+        //else
+        //    return;
+        if (currentPiece == null)
             return;
         console.log("rotating right");
     }
@@ -182,6 +200,14 @@ TetrisGame.Core = function () {
             initBag();
         }
         currentPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+
+        var curListOfBlocks = currentPiece.getListOfBlocks();
+        for (var i = 0; i < curListOfBlocks.length; ++i) {
+            if (board[curListOfBlocks[i].row][curListOfBlocks[i].col].filled === true) {
+                onLose();
+                break;
+            }
+        }
         //currentPiece = TetrisPieces.newLBlock();
     }
 
@@ -191,19 +217,147 @@ TetrisGame.Core = function () {
             board[curListOfBlocks[i].row][curListOfBlocks[i].col] = curListOfBlocks[i];
         }
         currentPiece = null;
+
+        
+        var linesBroken = handleBreakingLines(0);
+        if(linesBroken === 1)
+        {
+            playerScore += 40;
+        }
+        else if(linesBroken === 2)
+        {
+            playerScore += 100;
+        }
+        else if (linesBroken === 3) {
+            playerScore += 300;
+        }
+        else if(linesBroken === 4) {
+            playerScore += 1200;
+        }
+
     }
 
-    var updateUserTimers = function (elapsedTime) {
-        for(key in UserTimers)
+    var handleBreakingLines = function (linesBrokenSoFar) {
+        var lineIsComplete;
+        for(var r = 0; r < boardRows; ++r)
         {
-            UserTimers[key].lastTimeCalled += elapsedTime;
+            lineIsComplete = true;
+            for(var c = 0; c < boardCols; ++c)
+            {
+                if(board[r][c].filled === false)
+                {
+                    lineIsComplete = false;
+                    break;
+                }
+            }
+
+            if(lineIsComplete)
+            {
+                destroyLine(r);
+                break;
+            }
+        }
+
+        if(lineIsComplete === true)
+        {
+            return handleBreakingLines(linesBrokenSoFar+1);
+        }
+        else
+        {
+            return linesBrokenSoFar;
         }
     }
+
+    var createTetrisBlockEmitter = function (block) {
+
+        var maxSpeed = 250;
+        var emitterSpecs = {
+            particlesPerSecond: 750,
+            x: block.col * TetrisGame.Renderer.colWidth + TetrisGame.Renderer.colWidth / 2,
+            y: block.row * TetrisGame.Renderer.rowHeight + TetrisGame.Renderer.rowHeight / 2,
+            minRadius: 4,
+            maxRadius: 7,
+            minSpeed: 25,
+            maxSpeed: maxSpeed,
+            minAcceleration: 0,
+            maxAcceleration: 0,
+            minMaxSpeed: maxSpeed,
+            maxMaxSpeed: maxSpeed,
+            boundary: null,
+            onCollision: null,
+            image: block.texture.image,
+            minLifeTime: 250,
+            maxLifeTime: 750,
+            emitterLifeTime: 500
+        };
+
+        Emitters.addNewEmiter(createEmitterSpecObj(emitterSpecs));
+
+
+
+
+    }
+
+    var destroyLine = function (rowToDestroy) {
+
+        for (var c = 0; c < boardCols; ++c)
+        {
+            createTetrisBlockEmitter(board[rowToDestroy][c]);
+        }
+
+
+
+        for (var r = rowToDestroy; r < boardRows -1; ++r) {
+
+            for (var c = 0; c < boardCols; ++c) {
+                board[r][c].texture = board[r + 1][c].texture;
+                board[r][c].filled = board[r + 1][c].filled;
+            }
+        }
+
+        //for top row if this ever happens
+        for(var c = 0; c < boardCols; ++c)
+        {
+            board[boardRows - 1][c].filled = false;
+            board[boardRows - 1][c].texture = Textures.Empty;
+        }
+
+    }
+
+    var onLose = function () {
+
+        var playerName = prompt("You lost with score: " + playerScore + ".\nPlease enter you name");
+        if (!playerName)
+            playerName = "the nameless one";
+        console.log(playerName +" lost with score " + playerScore);
+
+        angular.module('postHighScores', []).run(function ($http) {
+            $http.post('/api/high-scores', { "name": "yolo", "score": playerScore }).
+                success(function (data, status, headers, config) {
+                    console.log("success!");
+                    console.log(data.result);
+                    //$scope.highscores = data.result;
+                }).
+                error(function (data, status, headers, config) {
+                    console.log('Error posting highscore - ' + JSON.stringify(data));
+                });
+        });
+        
+        TetrisGame.GameLoop.setGameActive(false);
+    }
+
+    //var updateUserTimers = function (elapsedTime) {
+    //    for(key in UserTimers)
+    //    {
+    //        UserTimers[key].lastTimeCalled += elapsedTime;
+    //    }
+    //}
 
     var update = function(elapsedTime)
     {
         timeSinceLastDrop += elapsedTime;
-        updateUserTimers(elapsedTime);
+        Emitters.updateEmitters(elapsedTime);
+        //updateUserTimers(elapsedTime);
         if(timeSinceLastDrop >= dropTimeInterval)
         {
             timeSinceLastDrop = 0;
@@ -219,6 +373,8 @@ TetrisGame.Core = function () {
     {
         //console.log("tetris game rendering!");
         TetrisGame.Renderer.drawBoard(board);
+        TetrisGame.Renderer.drawScore(playerScore);
+        TetrisGame.Renderer.drawParticles();
         
 
         if(currentPiece != null)
