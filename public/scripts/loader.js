@@ -27,6 +27,7 @@ window.addEventListener('load', function () {
                 'preload!scripts/KeyBoard.js', //requires TetrisGame.js
                 'preload!scripts/GameLoop.js', //requires TetrisGame.js
                 'preload!scripts/GameRenderer.js', //requires TetrisGame.js
+                'preload!scripts/AI.js',
 				'preload!scripts/jquery-1.11.2.min.js'
                 
 		    ],

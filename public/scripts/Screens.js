@@ -68,6 +68,7 @@ var HighScoresScreen = function () {
     var highScoresWrapperElem = document.getElementById("highScoresScreen");
 
     var show = function () {
+        angular.element(document.getElementById('highScoresScreen')).scope().updateScores();
         showElem(highScoresWrapperElem);
     };
 

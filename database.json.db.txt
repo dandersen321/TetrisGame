@@ -1,1 +1,1 @@
-{"d":[{"name":"Ryan Hermanson","score":85},{"name":"yolo9","score":"40"},{"name":"john","score":"40"},{"name":"yolo3","score":"40"},{"name":"yolo8","score":"40"},{"name":"Dylan Andersen","score":5},{"name":"yolo6","score":"0"},{"name":"yolo1","score":"0"},{"name":"the nameless one","score":"0"},{"name":"kam","score":"0"}]}
+{"d":[{"name":"Dylan2","score":"280"},{"name":"Ryan Hermanson","score":85},{"name":"Sessamekesh","score":"80"},{"name":"dean","score":"80"},{"name":"john","score":"40"}]}

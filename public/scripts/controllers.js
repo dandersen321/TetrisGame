@@ -6,13 +6,19 @@ var tetris_app = angular.module('tetris-app', []);
 
 tetris_app.controller('high-scores', function ($scope, $http) {
     $scope.highscores = [];
-    $http.get('/api/high-scores').
+
+    function updateScores() {
+        $http.get('/api/high-scores').
         success(function (data, status, headers, config) {
             $scope.highscores = data.result;
         }).
         error(function (data, status, headers, config) {
             console.log('Error retriving highscores - ' + JSON.stringify(data));
         });
+    }
+
+    $scope.updateScores = updateScores;
+    updateScores();
 
     //$scope.addHighScore = function(playerScore)
     //{
