@@ -442,7 +442,7 @@ TetrisGame.Core = function () {
 
     function createPotentialBoard(numOfRotations, col) {
         var currentCol = getCurrentCol();
-        var colsToMove = Math.abs(currentCol - col);
+        var colsToMove = Math.abs(currentCol - col) - 1;
 
         rotateCurrentPieceNTimes(numOfRotations);
 
@@ -475,7 +475,7 @@ TetrisGame.Core = function () {
     function moveTowardsComputerMove() {
         timeSinceLastComputerMove = 0;
         var currentCol = getCurrentCol();
-        var colsToMove = Math.abs(currentCol - computerMove.col);
+        var colsToMove = Math.abs(currentCol - computerMove.col) - 1;
         var canMoveInDirection;
 
         if (currentCol > computerMove.col) {
