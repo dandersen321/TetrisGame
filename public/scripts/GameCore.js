@@ -549,12 +549,18 @@ TetrisGame.Core = function () {
         }
     }
 
-    var stopAI = function () {
+    var turnOffAI = function () {
         computerPlaying = false;
+        var AIControlButton = document.getElementById("gameAIControlButton");
+        AIControlButton.innerHTML = "Turn on AI Control";
+        AIControlButton.onclick = TetrisGame.Core.turnOnAI;
     }
 
-    var letAITakeOver = function () {
+    var turnOnAI = function () {
         computerPlaying = true;
+        var AIControlButton = document.getElementById("gameAIControlButton");
+        AIControlButton.innerHTML = "Turn off AI Control";
+        AIControlButton.onclick = TetrisGame.Core.turnOffAI;
     }
 
 
@@ -569,8 +575,8 @@ TetrisGame.Core = function () {
         rotatePieceRight: rotatePieceRight,
         update: update,
         render: render,
-        stopAI: stopAI,
-        letAITakeOver: letAITakeOver,
+        turnOffAI: turnOffAI,
+        turnOnAI: turnOnAI,
         startNewGame: startNewGame,
         getGameCurrentlyBeingPlayed: getGameCurrentlyBeingPlayed
     };
