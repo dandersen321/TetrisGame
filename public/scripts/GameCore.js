@@ -539,7 +539,7 @@ TetrisGame.Core = function () {
     {
         //console.log("tetris game rendering!");
         TetrisGame.Renderer.drawBoard(board);
-        TetrisGame.Renderer.drawScore(playerScore);
+        TetrisGame.Renderer.drawUpdated(nextPiece, playerScore);
         TetrisGame.Renderer.drawParticles();
         
 
