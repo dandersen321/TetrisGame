@@ -33,7 +33,7 @@ var ScreenManager = function () {
     newScreen(HighScoresScreen, ScreenNames.HighScores);
     newScreen(ControlsScreen, ScreenNames.Controls);
     newScreen(CreditsScreen, ScreenNames.Credits);
-    listOfScreens[ScreenNames.GameMenu].show();
+    //listOfScreens[ScreenNames.GameMenu].show();
     //}
 
     
@@ -50,7 +50,7 @@ var ScreenManager = function () {
     //listOfScreens.push(newScreen(ScreenNames.Help, showHelp, hideHelp));
 
 
-    var changeToScreen = function (newScreenIndex)
+    var changeToScreen = function (newScreenIndex, specialParam)
     {
         if (activeScreenIndex == newScreenIndex)
         {
@@ -59,7 +59,7 @@ var ScreenManager = function () {
         }
         if(activeScreenIndex != -1)
             listOfScreens[activeScreenIndex].hide();
-        listOfScreens[newScreenIndex].show();
+        listOfScreens[newScreenIndex].show(specialParam);
         activeScreenIndex = newScreenIndex;
     }
 

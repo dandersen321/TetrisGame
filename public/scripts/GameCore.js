@@ -2,18 +2,68 @@
 TetrisGame.Core = function () {
     var boardRows = 20;
     var boardCols = 10;
-    var timeUntilRotate = 0;
     var getNumberOfBoardRows = function () { return boardRows; };
     var getNumberOfBoardCols = function () { return boardCols; };
 
-    var playerScore = 0;
-    var computerPlaying = false;
-    var computerMove = null;
-    var simulationMode = false;
+    var playerScore;
+    var computerPlaying;
+    var computerMove;
+    var simulationMode;
     var computerSpeed = 100; //computer can make a move every X ms
-    var timeSinceLastComputerMove = 0;
+    var timeSinceLastComputerMove;
 
     var bag = [];
+
+    var timeSinceLastDrop;
+    var dropTimeInterval = 1000;
+
+    var board;
+    var currentPiece = null;
+    var nextPiece = null;
+
+    var gameCurrentlyBeingPlayed;
+    var getGameCurrentlyBeingPlayed = function () { return gameCurrentlyBeingPlayed; };
+
+    function startNewGame() {
+        TetrisGame.GameLoop.setGameActive(true);
+        
+        playerScore = 0;
+        computerPlaying = false;
+        computerMove = null;
+        simulationMode = false;
+        timeSinceLastComputerMove = 0;
+        gameCurrentlyBeingPlayed = true;
+
+        bag = [];
+
+        timeSinceLastDrop = 0;
+
+        board = new Array(boardRows);
+        for (var i = 0; i < boardRows; i++) {
+            board[i] = new Array(boardCols);
+            for (var j = 0; j < boardCols; ++j) {
+                board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
+            }
+        }
+
+        board.clone = function () {
+            var newBoard = new Array(boardRows);
+            for (var i = 0; i < boardRows; i++) {
+                newBoard[i] = new Array(boardCols);
+                for (var j = 0; j < boardCols; ++j) {
+                    newBoard[i][j] = Blocks.newBlock(i, j, this[i][j].texture, this[i][j].filled);
+                }
+            }
+
+            newBoard.clone = this.clone;
+
+            return newBoard;
+
+        }
+
+        nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+        createCurrentPiece();
+    }
 
     // Add pieces to bag...
     function initBag() {
@@ -41,63 +91,9 @@ TetrisGame.Core = function () {
         bag.push(TetrisPieces.newStraight());
         bag.push(TetrisPieces.newStraight());
     }
-    var timeSinceLastDrop = 0;
-    var dropTimeInterval = 1000;
-
-    //var newUserMovementTimer = function(timeDelay){
-
-    //    var that = {
-    //        lastTimeCalled: 0,
-    //        timeDelay: timeDelay
-    //    };
-
-    //    that.canPieceMove = function(){
-    //        if(that.lastTimeCalled > that.timeDelay && currentPiece !=null)
-    //            return true;
-    //        else
-    //            return false;
-    //    }
-
-    //    return that;
-    //}
-
-    //var UserTimers = {
-    //        moveLeft : newUserMovementTimer(100),
-    //        moveRight : newUserMovementTimer(100),
-    //        softDrop : newUserMovementTimer(100),
-    //        hardDrop : newUserMovementTimer(300),
-    //        rotateLeft : newUserMovementTimer(200),
-    //        rotateRight : newUserMovementTimer(200),
-    //    };
 
 
-    var board = new Array(boardRows);
-    for (var i = 0; i < boardRows; i++)
-    {
-        board[i] = new Array(boardCols);
-        for(var j = 0; j < boardCols; ++j)
-        {
-            board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
-        }
-    }
-
-    board.clone = function () {
-        var newBoard = new Array(boardRows);
-        for (var i = 0; i < boardRows; i++) {
-            newBoard[i] = new Array(boardCols);
-            for (var j = 0; j < boardCols; ++j) {
-                newBoard[i][j] = Blocks.newBlock(i, j, this[i][j].texture, this[i][j].filled);
-            }
-        }
-
-        newBoard.clone = this.clone;
-
-        return newBoard;
-
-    }
-
-    var currentPiece = null;
-    var nextPiece;
+   
 
     //var shouldPieceBeMovedByUser = function (UserTimers.moveLeft.timeSinceLastUserMove) {
     //    if (timeSinceLastUserMove > userDelay && currentPiece != null)
@@ -252,9 +248,11 @@ TetrisGame.Core = function () {
         if (bag.length === 0) {
             initBag();
         }
-        currentPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+        currentPiece = nextPiece;
+        nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
 
-        var curListOfBlocks = currentPiece.getListOfBlocks();
+
+        var curListOfBlocks = nextPiece.getListOfBlocks();
         for (var i = 0; i < curListOfBlocks.length; ++i) {
             if (board[curListOfBlocks[i].row][curListOfBlocks[i].col].filled === true) {
                 onLose();
@@ -393,6 +391,7 @@ TetrisGame.Core = function () {
             console.log('FAIL! ' + JSON.stringify(err));
         });
         
+        gameCurrentlyBeingPlayed = false;
         TetrisGame.GameLoop.setGameActive(false);
     }
 
@@ -571,6 +570,8 @@ TetrisGame.Core = function () {
         update: update,
         render: render,
         stopAI: stopAI,
-        letAITakeOver: letAITakeOver
+        letAITakeOver: letAITakeOver,
+        startNewGame: startNewGame,
+        getGameCurrentlyBeingPlayed: getGameCurrentlyBeingPlayed
     };
 }();

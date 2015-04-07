@@ -13,24 +13,41 @@ var GameMenuScreen = (function () {
     var menuItems = [];
 
     //specialClass is optional if the css should be one other than the generic menubutton class
-    var newMenuItem = function (buttonText, functionToRun, showFunction, hideFunction, specialClass) {
+    var newMenuItem = function (buttonText, functionToRun, specialClass, specialId) {
         if (!specialClass)
             specialClass = "class-gameMenuOption";
-        menuElem.innerHTML += ("<li onclick = '" + functionToRun + "' class = '" + specialClass + "' >" + buttonText + "</li>");
+
+        if (specialId !== undefined)
+            specialId = "id = \"" + specialId + "\"";
+        else
+            specialId = "";
+        menuElem.innerHTML += ("<li " + specialId + " onclick = '" + functionToRun + "' class = '" + specialClass + "' >" + buttonText + "</li>");
     }
+
 
     /* CONSTRUCTOR*/
     //var intializeMenu = function () {
-    menuItems.push(newMenuItem("New Game", "ScreenManager.changeToScreen(ScreenNames.GamePlaying)"));
-        menuItems.push(newMenuItem("High Scores", "ScreenManager.changeToScreen(ScreenNames.HighScores)"));
-        menuItems.push(newMenuItem("Controls", "ScreenManager.changeToScreen(ScreenNames.Controls)"));
-        menuItems.push(newMenuItem("Credits", "ScreenManager.changeToScreen(ScreenNames.Credits)"));
+    menuItems.push(newMenuItem("New Game", "ScreenManager.changeToScreen(ScreenNames.GamePlaying, false)"));
+    menuItems.push(newMenuItem("Continue Game", "ScreenManager.changeToScreen(ScreenNames.GamePlaying, true)", null, "continueGame"));
+    menuItems.push(newMenuItem("High Scores", "ScreenManager.changeToScreen(ScreenNames.HighScores)"));
+    menuItems.push(newMenuItem("Controls", "ScreenManager.changeToScreen(ScreenNames.Controls)"));
+    menuItems.push(newMenuItem("Credits", "ScreenManager.changeToScreen(ScreenNames.Credits)"));
     //}
+
+    
 
     
 
     var show = function () {
         showElem(menuScreen);
+        if(TetrisGame.Core.getGameCurrentlyBeingPlayed() === true)
+        {
+            showElem(document.getElementById("continueGame"));
+        }
+        else
+        {
+            hideElem(document.getElementById("continueGame"));
+        }
     }
 
     var hide = function () {
@@ -48,8 +65,11 @@ var GameMenuScreen = (function () {
 var GamePlayingScreen = function () {
     var gameScreenWrapperElem = document.getElementById("gamePlayingScreen");
 
-    var show = function () {
-        TetrisGame.GameLoop.setGameActive(true);
+    var show = function (continueGame) {
+        if (continueGame === true)
+            TetrisGame.GameLoop.setGameActive(true);
+        else
+            TetrisGame.Core.startNewGame();
         showElem(gameScreenWrapperElem);
     }
 
