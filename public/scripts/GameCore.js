@@ -94,7 +94,7 @@ TetrisGame.Core = function () {
 
         return newBoard;
 
-    }
+    };
 
     var currentPiece = null;
     var nextPiece;
@@ -408,7 +408,7 @@ TetrisGame.Core = function () {
     function findComputerMoveUsingAI() {
         var boardClone = board.clone();
         var currentPieceClone = currentPiece.clone();
-        var maxScore = 1;
+        var maxScore = 123456789;
         var maxMove = null;
         var canMakeMove, newScore;
         simulationMode = true;
@@ -422,7 +422,7 @@ TetrisGame.Core = function () {
                     continue;
 
                 newScore = AI.getScore(board);
-                if(newScore > maxScore)
+                if(newScore < maxScore)
                 {
                     maxScore = newScore;
                     maxMove = {

@@ -20,7 +20,7 @@
 
     gameUpdateContext.clear = function () {
         gameUpdateContext.clearRect(0, 0, gameUpdateCanvas.width, gameUpdateCanvas.height);
-    }
+    };
 
     gameUpdateContext.font = "30px Arial";
 
