@@ -9,6 +9,7 @@ TetrisGame.Core = function () {
     var computerPlaying;
     var computerMove;
     var simulationMode;
+    var simulationLinesBroken;
     var computerSpeed = 100; //computer can make a move every X ms
     var timeSinceLastComputerMove;
 
@@ -69,6 +70,14 @@ TetrisGame.Core = function () {
     function initBag() {
         //bag.push(TetrisPieces.newStraight());
         //bag.push(TetrisPieces.newStraight());
+        //bag.push(TetrisPieces.newStraight());
+
+        //bag.push(TetrisPieces.newLBlock());
+        //bag.push(TetrisPieces.newReverseLBlock());
+        //bag.push(TetrisPieces.newTBlock());
+        //bag.push(TetrisPieces.newSquiggly());
+        //bag.push(TetrisPieces.newReverseSquiggly());
+        //bag.push(TetrisPieces.newSquare());
         //bag.push(TetrisPieces.newStraight());
 
         bag.push(TetrisPieces.newLBlock());
@@ -209,6 +218,8 @@ TetrisGame.Core = function () {
         //}
         //else
         //    return;
+        if (currentPiece == null)
+            return false;
         var currentPieceClone = currentPiece.clone();
         currentPiece.rotateRight();
         if (!validRotation()) {
@@ -271,6 +282,14 @@ TetrisGame.Core = function () {
 
         
         var linesBroken = handleBreakingLines(0);
+
+        if (simulationMode === true)
+        {
+            simulationLinesBroken = linesBroken;
+            return;
+        }
+            
+
         if(linesBroken === 1)
         {
             playerScore += 40;
@@ -402,49 +421,103 @@ TetrisGame.Core = function () {
     //    }
     //}
 
+    function printState(boardClone) {
+        var line;
+        for(var r = boardRows-1; r >=0; r--)
+        {
+            line = "" + r + ":";
+            for (var c = 0; c < boardCols; c++) {
+                if(board[r][c].filled === true)
+                {
+                    //console.log('X');
+                    if (boardClone[r][c].filled === true)
+                        line += 'X';
+                    else
+                        line += 'N';
+                }
+                else {
+                    //console.log('O');
+                    line += 'O';
+                }
+            }
+            console.log(line);
+        }
+    }
+
     var numOfUniqueRotations = 4;
 
     function findComputerMoveUsingAI() {
         var boardClone = board.clone();
         var currentPieceClone = currentPiece.clone();
-        var maxScore = -1;
+        var maxScore = Number.MAX_VALUE;
         var maxMove = null;
         var canMakeMove, newScore;
         simulationMode = true;
-        for (var r = 0; r < numOfUniqueRotations; ++r)
-        {
-            for (var c = 0; c < boardCols; ++c) {
-                board = boardClone.clone();
-                currentPiece = currentPieceClone.clone();
-                canMakeMove = createPotentialBoard(numOfUniqueRotations, c);
-                if (canMakeMove === false)
-                    continue;
+        try{
 
-                newScore = AI.getScore(board);
-                if(newScore > maxScore)
-                {
-                    maxScore = newScore;
-                    maxMove = {
-                        col: c,
-                        numOfRotations: r
-                    };
+        
+            for (var r = 0; r < numOfUniqueRotations; ++r)
+            {
+                for (var c = 0; c < boardCols; ++c) {
+                    board = boardClone.clone();
+                    currentPiece = currentPieceClone.clone();
+                    canMakeMove = createPotentialBoard(r, c);
+                    if (canMakeMove === false)
+                        continue;
+
+                    if (simulationLinesBroken > 0)
+                        console.log("lines broken in sim: " + simulationLinesBroken);
+
+                    newScore = AI.getScore(board, simulationLinesBroken);
+                
+                    //TetrisGame.Renderer.drawBoard(board);
+                    //printState(boardClone);
+                    //console.log(newScore);
+
+                    if (newScore < maxScore)
+                    {
+                        printState(boardClone);
+                        console.log("new max Score: " + newScore);
+                    }
+                    
+                
+                    if(newScore < maxScore)
+                    {
+                        maxScore = newScore;
+                        maxMove = {
+                            col: c,
+                            numOfRotations: r
+                        };
+                    }
+
                 }
-
             }
-        }
 
-        board = boardClone.clone();
-        currentPiece = currentPieceClone.clone();
-        rotateCurrentPieceNTimes(maxMove.numOfRotations);
-        simulationMode = false;
-        computerMove = maxMove;
+            board = boardClone.clone();
+            currentPiece = currentPieceClone.clone();
+            rotateCurrentPieceNTimes(maxMove.numOfRotations);
+            simulationMode = false;
+            computerMove = maxMove;
+        }
+        catch(e)
+        {
+            console.error(e);
+            computerMove = null;
+            board = boardClone.clone();
+            currentPiece = currentPieceClone.clone();
+            simulationMode = false;
+        }
     }
 
     function createPotentialBoard(numOfRotations, col) {
-        var currentCol = getCurrentCol();
-        var colsToMove = Math.abs(currentCol - col) - 1;
+        
 
         rotateCurrentPieceNTimes(numOfRotations);
+        //if (currentPiece === null) //if there is a piece 2 spots below this will break because rotate does softdrop twice
+        //    return false;
+
+        var currentCol = getCurrentCol();
+        var colsToMove = Math.abs(currentCol - col);
 
         var canMoveThatDirection;
         for(var i = 0; i < colsToMove; ++i)
@@ -475,7 +548,7 @@ TetrisGame.Core = function () {
     function moveTowardsComputerMove() {
         timeSinceLastComputerMove = 0;
         var currentCol = getCurrentCol();
-        var colsToMove = Math.abs(currentCol - computerMove.col) - 1;
+        var colsToMove = Math.abs(currentCol - computerMove.col);
         var canMoveInDirection;
 
         if (currentCol > computerMove.col) {
@@ -497,6 +570,8 @@ TetrisGame.Core = function () {
 
     function rotateCurrentPieceNTimes(n)
     {
+        currentPieceSoftDrop();
+        //currentPieceSoftDrop();
         for(var i = 0; i < n; ++i)
         {
             rotatePieceRight();
@@ -512,6 +587,8 @@ TetrisGame.Core = function () {
         if (currentPiece === null)
         {
             computerMove = null;
+            createCurrentPiece();
+            return;
         }
         else if (computerPlaying === true && computerMove === null)
         {

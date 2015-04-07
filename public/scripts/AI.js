@@ -61,8 +61,8 @@
             h4 += Math.abs(highSpot(col) - avg);
         }
 
-        console.log("h0: " + h0 + " h1: " + h1 + " h2 " + h2 + " h3 " + h3 + " h4 " + h4);
-        console.log(rfs);
+        //console.log("h0: " + h0 + " h1: " + h1 + " h2 " + h2 + " h3 " + h3 + " h4 " + h4);
+        //console.log(rfs);
         return rfs[0] * h0 + rfs[1] * h1 + rfs[2] * h2 + rfs[3] * h3 + rfs[4] * h4;
     };
 

@@ -12,20 +12,20 @@
 
         var moveLeft = function () {
             c -= 1;
-            console.log("moving left");
+            //console.log("moving left");
         }
 
         var moveRight = function () {
             c += 1;
-            console.log("moving right");
+            //console.log("moving right");
         }
 
         var softDrop = function () {
-            console.log("soft drop");
+            //console.log("soft drop");
         }
 
         var hardDrop = function () {
-            console.log("hard drop");
+            //console.log("hard drop");
         }
 
         var rotateRight = function () {
