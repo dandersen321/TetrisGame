@@ -407,7 +407,7 @@ TetrisGame.Core = function () {
     function findComputerMoveUsingAI() {
         var boardClone = board.clone();
         var currentPieceClone = currentPiece.clone();
-        var maxScore = 1;
+        var maxScore = -1;
         var maxMove = null;
         var canMakeMove, newScore;
         simulationMode = true;
