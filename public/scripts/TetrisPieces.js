@@ -58,6 +58,16 @@
             return tr;
         }
 
+        var clone = function () {
+            var newListOfBlocks = new Array(this.listOfBlocks.length);
+            for (var i = 0; i < listOfBlocks.length; ++i)
+            {
+                newListOfBlocks[i] = Blocks.newBlock(listOfBlocks[i].row, listOfBlocks[i].col, listOfBlocks[i].texture, listOfBlocks[i].filled);
+            }
+            return newBrick(newListOfBlocks);
+
+        }
+
         return {
             listOfBlocks: listOfBlocks,
             moveLeft: moveLeft,
@@ -67,7 +77,8 @@
             rotateRight: rotateRight,
             rotateLeft: rotateLeft,
             getListOfBlocks: getListOfBlocks,
-            moveDown: moveDown
+            moveDown: moveDown,
+            clone: clone
         };
     }
 

@@ -7,6 +7,11 @@ TetrisGame.Core = function () {
     var getNumberOfBoardCols = function () { return boardCols; };
 
     var playerScore = 0;
+    var computerPlaying = false;
+    var computerMove = null;
+    var simulationMode = false;
+    var computerSpeed = 100; //computer can make a move every X ms
+    var timeSinceLastComputerMove = 0;
 
     var bag = [];
 
@@ -75,6 +80,22 @@ TetrisGame.Core = function () {
             board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
         }
     }
+
+    board.clone = function () {
+        var newBoard = new Array(boardRows);
+        for (var i = 0; i < boardRows; i++) {
+            newBoard[i] = new Array(boardCols);
+            for (var j = 0; j < boardCols; ++j) {
+                newBoard[i][j] = Blocks.newBlock(i, j, this[i][j].texture, this[i][j].filled);
+            }
+        }
+
+        newBoard.clone = this.clone;
+
+        return newBoard;
+
+    }
+
     var currentPiece = null;
     var nextPiece;
 
@@ -87,7 +108,7 @@ TetrisGame.Core = function () {
 
     var currentPieceMoveLeft = function () {
         if (currentPiece == null)
-            return;
+            return false;
         //if (UserTimers.moveLeft.canPieceMove())
         //    UserTimers.moveLeft.lastTimeCalled = 0;
         //else
@@ -98,10 +119,11 @@ TetrisGame.Core = function () {
         for(var i = 0; i < curListOfBlocks.length; ++i)
         {
             if (curListOfBlocks[i].col - 1 < 0 || board[curListOfBlocks[i].row][curListOfBlocks[i].col-1].filled === true)
-                return;
+                return false;
         }
 
         currentPiece.moveLeft();
+        return true;
     }
 
     var currentPieceMoveRight = function () {
@@ -110,16 +132,17 @@ TetrisGame.Core = function () {
         //else
         // return;
         if (currentPiece == null)
-            return;
+            return false;
 
         var curListOfBlocks = currentPiece.getListOfBlocks();
         var newCol;
         for (var i = 0; i < curListOfBlocks.length; ++i) {
             if (curListOfBlocks[i].col + 1 >= boardCols || board[curListOfBlocks[i].row][curListOfBlocks[i].col + 1].filled === true)
-                return;
+                return false;
         }
 
         currentPiece.moveRight();
+        return true;
     }
 
     var currentPieceSoftDrop = function ()
@@ -129,8 +152,9 @@ TetrisGame.Core = function () {
         //else
         //    return;
         if (currentPiece == null)
-            return;
+            return false;
         dropCurrentPiece();
+        return true;
     }
 
     var currentPieceHardDrop = function ()
@@ -141,11 +165,23 @@ TetrisGame.Core = function () {
         //    return;
         //console.log("hard drop");
         if (currentPiece == null)
-            return;
+            return false;
         while(currentPiece != null)
         {
-            dropCurrentPiece();
+            currentPieceSoftDrop();
         }
+        return true;
+    }
+
+    var validRotation = function () {
+        var listOfBlocks = currentPiece.getListOfBlocks();
+        for(var i = 0; i < listOfBlocks.length; ++i)
+        {
+            if (listOfBlocks[i].row < 0 || listOfBlocks[i].row >= boardRows || listOfBlocks[i].col < 0 || listOfBlocks[i].col > boardCols)
+                return false;
+        }
+
+        return true;
     }
 
     var rotatePieceLeft = function () {
@@ -154,10 +190,18 @@ TetrisGame.Core = function () {
         //else
         //    return;
         if (currentPiece == null)
-            return;
+            return false;
+
+        var currentPieceClone = currentPiece.clone();
 
         currentPiece.rotateLeft();
-        console.log("rotating left");
+        if (!validRotation())
+        {
+            currentPiece = currentPieceClone;
+            return false;
+        }
+        //console.log("rotating left");
+        return true;
     }
 
     var rotatePieceRight = function () {
@@ -169,9 +213,16 @@ TetrisGame.Core = function () {
         //}
         //else
         //    return;
+        var currentPieceClone = currentPiece.clone();
+        currentPiece.rotateRight();
+        if (!validRotation()) {
+            currentPiece = currentPieceClone;
+            return false;
+        }
         if (currentPiece == null)
-            return;
-        console.log("rotating right");
+            return false;
+        //console.log("rotating right");
+        return true;
     }
 
     
@@ -302,10 +353,13 @@ TetrisGame.Core = function () {
 
     var destroyLine = function (rowToDestroy) {
 
-        for (var c = 0; c < boardCols; ++c)
+        if (simulationMode !== true)
         {
-            createTetrisBlockEmitter(board[rowToDestroy][c]);
+            for (var c = 0; c < boardCols; ++c) {
+                createTetrisBlockEmitter(board[rowToDestroy][c]);
+            }
         }
+        
 
 
 
@@ -349,10 +403,127 @@ TetrisGame.Core = function () {
     //    }
     //}
 
+    var numOfUniqueRotations = 4;
+
+    function findComputerMoveUsingAI() {
+        var boardClone = board.clone();
+        var currentPieceClone = currentPiece.clone();
+        var maxScore = 1;
+        var maxMove = null;
+        var canMakeMove, newScore;
+        simulationMode = true;
+        for (var r = 0; r < numOfUniqueRotations; ++r)
+        {
+            for (var c = 0; c < boardCols; ++c) {
+                board = boardClone.clone();
+                currentPiece = currentPieceClone.clone();
+                canMakeMove = createPotentialBoard(numOfUniqueRotations, c);
+                if (canMakeMove === false)
+                    continue;
+
+                newScore = AI.getScore(board);
+                if(newScore > maxScore)
+                {
+                    maxScore = newScore;
+                    maxMove = {
+                        col: c,
+                        numOfRotations: r
+                    };
+                }
+
+            }
+        }
+
+        board = boardClone.clone();
+        currentPiece = currentPieceClone.clone();
+        rotateCurrentPieceNTimes(maxMove.numOfRotations);
+        simulationMode = false;
+        computerMove = maxMove;
+    }
+
+    function createPotentialBoard(numOfRotations, col) {
+        var currentCol = getCurrentCol();
+        var colsToMove = Math.abs(currentCol - col);
+
+        rotateCurrentPieceNTimes(numOfRotations);
+
+        var canMoveThatDirection;
+        for(var i = 0; i < colsToMove; ++i)
+        {
+            if(currentCol > col)
+            {
+                canMoveThatDirection = currentPieceMoveLeft();
+            }
+            else {
+                canMoveThatDirection = currentPieceMoveRight();
+            }
+
+            if(canMoveThatDirection !== true)
+            {
+                return false;
+            }
+        }
+
+        currentPieceHardDrop();
+
+        return true;
+    }
+
+    function getCurrentCol() {
+        return currentPiece.getListOfBlocks()[0].col;
+    }
+
+    function moveTowardsComputerMove() {
+        timeSinceLastComputerMove = 0;
+        var currentCol = getCurrentCol();
+        var colsToMove = Math.abs(currentCol - computerMove.col);
+        var canMoveInDirection;
+
+        if (currentCol > computerMove.col) {
+            canMoveInDirection = currentPieceMoveLeft();
+        }
+        else if(currentCol < computerMove.col) {
+            canMoveInDirection = currentPieceMoveRight();
+        }
+        else {
+            currentPieceHardDrop();
+        }
+
+        if (!canMoveInDirection) {
+            currentPieceHardDrop();
+        }
+   
+
+    }
+
+    function rotateCurrentPieceNTimes(n)
+    {
+        for(var i = 0; i < n; ++i)
+        {
+            rotatePieceRight();
+        }
+    }
+
     var update = function(elapsedTime)
     {
         timeSinceLastDrop += elapsedTime;
+        timeSinceLastComputerMove += elapsedTime;
         Emitters.updateEmitters(elapsedTime);
+
+        if (currentPiece === null)
+        {
+            computerMove = null;
+        }
+        else if (computerPlaying === true && computerMove === null)
+        {
+            findComputerMoveUsingAI();
+        }
+        else if (computerPlaying && timeSinceLastComputerMove >= computerSpeed) {
+            moveTowardsComputerMove();
+            
+        }
+        
+
         //updateUserTimers(elapsedTime);
         if(timeSinceLastDrop >= dropTimeInterval)
         {
@@ -379,6 +550,14 @@ TetrisGame.Core = function () {
         }
     }
 
+    var stopAI = function () {
+        computerPlaying = false;
+    }
+
+    var letAITakeOver = function () {
+        computerPlaying = true;
+    }
+
 
     return {
         getNumberOfBoardCols: getNumberOfBoardCols,
@@ -390,6 +569,8 @@ TetrisGame.Core = function () {
         rotatePieceLeft: rotatePieceLeft,
         rotatePieceRight: rotatePieceRight,
         update: update,
-        render: render
+        render: render,
+        stopAI: stopAI,
+        letAITakeOver: letAITakeOver
     };
 }();
