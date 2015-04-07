@@ -51,54 +51,6 @@ TetrisGame.Core = function () {
     //        timeDelay: timeDelay
     //    };
 
-    //    that.canPieceMove = function(){
-    //        if(that.lastTimeCalled > that.timeDelay && currentPiece !=null)
-    //            return true;
-    //        else
-    //            return false;
-    //    }
-
-    //    return that;
-    //}
-
-    //var UserTimers = {
-    //        moveLeft : newUserMovementTimer(100),
-    //        moveRight : newUserMovementTimer(100),
-    //        softDrop : newUserMovementTimer(100),
-    //        hardDrop : newUserMovementTimer(300),
-    //        rotateLeft : newUserMovementTimer(200),
-    //        rotateRight : newUserMovementTimer(200),
-    //    };
-
-
-    var board = new Array(boardRows);
-    for (var i = 0; i < boardRows; i++)
-    {
-        board[i] = new Array(boardCols);
-        for(var j = 0; j < boardCols; ++j)
-        {
-            board[i][j] = Blocks.newBlock(i, j, Textures.Empty, false);
-        }
-    }
-
-    board.clone = function () {
-        var newBoard = new Array(boardRows);
-        for (var i = 0; i < boardRows; i++) {
-            newBoard[i] = new Array(boardCols);
-            for (var j = 0; j < boardCols; ++j) {
-                newBoard[i][j] = Blocks.newBlock(i, j, this[i][j].texture, this[i][j].filled);
-            }
-        }
-
-        newBoard.clone = this.clone;
-
-        return newBoard;
-
-    };
-
-    var currentPiece = null;
-    var nextPiece;
-
     //var shouldPieceBeMovedByUser = function (UserTimers.moveLeft.timeSinceLastUserMove) {
     //    if (timeSinceLastUserMove > userDelay && currentPiece != null)
     //        return true;
@@ -253,6 +205,7 @@ TetrisGame.Core = function () {
             initBag();
         }
         currentPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+        nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
 
         var curListOfBlocks = currentPiece.getListOfBlocks();
         for (var i = 0; i < curListOfBlocks.length; ++i) {
@@ -408,7 +361,7 @@ TetrisGame.Core = function () {
     function findComputerMoveUsingAI() {
         var boardClone = board.clone();
         var currentPieceClone = currentPiece.clone();
-        var maxScore = 123456789;
+        var maxScore = 1;
         var maxMove = null;
         var canMakeMove, newScore;
         simulationMode = true;
@@ -422,7 +375,7 @@ TetrisGame.Core = function () {
                     continue;
 
                 newScore = AI.getScore(board);
-                if(newScore < maxScore)
+                if(newScore > maxScore)
                 {
                     maxScore = newScore;
                     maxMove = {

@@ -36,8 +36,24 @@
     gradient.addColorStop("1.0", "blue");
     gameUpdateContext.fillStyle = gradient;
 
-    function drawScore(score) {
+    var nextPieceLeftMargin = 30;
+    var nextPieceTopMargin = 30;
+    var drawUpdated = function(nextPiece, score){
         gameUpdateContext.clear();
+        drawNextPiece(nextPiece);
+        drawScore(score);
+    }
+
+    var drawNextPiece = function (tetrisPiece) {
+        
+        var lob = tetrisPiece.getListOfBlocks();
+        for (var i = 0; i < lob.length; ++i) {
+            //gameUpdateContext.drawImage(lob[i].texture.image, nextPieceLeftMargin, nextPieceTopMargin, colWidth, rowHeight);
+            gameUpdateContext.drawImage(lob[i].texture.image, (lob[i].col - boardCols/2 + 3) * colWidth, (boardRows - lob[i].row ) * rowHeight, colWidth, rowHeight);
+        }
+    }
+
+    function drawScore(score) {
         gameUpdateContext.fillText("Score", x0FirstMessage, y0FirstMessage);
         gameUpdateContext.fillText(score, x0SecondMessage, y0SecondMessage);
     }
@@ -64,6 +80,8 @@
         }
     }
 
+    
+
     var drawParticles = function () {
         var listOfCurrentEmitters = Emitters.getEmitters();
         for (var i = 0; i < listOfCurrentEmitters.length; ++i) {
@@ -80,7 +98,7 @@
         drawParticles: drawParticles,
         drawBoard: drawBoard,
         drawPiece: drawPiece,
-        drawScore: drawScore,
+        drawUpdated: drawUpdated,
         colWidth: colWidth,
         rowHeight: rowHeight
     };
