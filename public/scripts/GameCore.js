@@ -98,6 +98,10 @@ TetrisGame.Core = function () {
         bag.push(TetrisPieces.newSquare());
         bag.push(TetrisPieces.newSquare());
         bag.push(TetrisPieces.newSquare());
+        bag.push(TetrisPieces.newSquare());
+        bag.push(TetrisPieces.newSquare());
+        bag.push(TetrisPieces.newStraight());
+        bag.push(TetrisPieces.newStraight());
         bag.push(TetrisPieces.newStraight());
         bag.push(TetrisPieces.newStraight());
         bag.push(TetrisPieces.newStraight());
