@@ -10,7 +10,7 @@ TetrisGame.Core = function () {
     var computerMove;
     var simulationMode;
     var simulationLinesBroken;
-    var computerSpeed = 100; //computer can make a move every X ms
+    var computerSpeed = 5; //computer can make a move every X ms
     var timeSinceLastComputerMove;
 
     var bag = [];

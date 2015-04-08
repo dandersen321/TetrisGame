@@ -50,17 +50,26 @@ app.post('/api/high-scores', function (req, res) {
 });
 
 app.post('/api/ai-report-score', function (req, res) {
-    fs.readFile(__dirname + '/ai.json', { encoding: 'utf-8' }, function (err, data) {
-        console.log('Data received - ' + JSON.stringify(req.body));
-        if (err) {
-            write(JSON.stringify({d: [req.body]}));
-        } else {
-            var t = JSON.parse(data).d;
-            t.push(req.body);
-            t = t.sort(function (a, b) { return parseFloat(b.score) - parseFloat(a.score); });
-            write(JSON.stringify({d: t}));
-        }
-    });
+    if (req.body.score > 0) {
+        fs.readFile(__dirname + '/ai.json', {encoding: 'utf-8'}, function (err, data) {
+            console.log('Data received - ' + JSON.stringify(req.body));
+            if (err) {
+                write(JSON.stringify({d: [req.body]}));
+            } else {
+                var t = JSON.parse(data).d;
+                t.push(req.body);
+                t = t.sort(function (a, b) {
+                    return parseFloat(b.score) - parseFloat(a.score);
+                }).splice(0, 50);
+                for (var i = 0; i < 10 && i < t.length; i++) {
+                    console.log(i + ' (' + t[i].score + '): ' + JSON.stringify(t[i]));
+                }
+                write(JSON.stringify({d: t}));
+            }
+        });
+    } else {
+        res.send({'success': true});
+    }
 
     function write(contents) {
         fs.writeFile(__dirname + '/ai.json', contents, { encoding: 'utf-8'}, function(err) {
