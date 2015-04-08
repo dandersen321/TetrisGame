@@ -12,6 +12,7 @@ TetrisGame.Core = function () {
     var simulationMode;
     var simulationLinesBroken;
     var computerSpeed = 50; //computer can make a move every X ms
+    //var computerSpeed = 0;
     var timeSinceLastComputerMove;
     var k = 0;
 
@@ -31,6 +32,7 @@ TetrisGame.Core = function () {
 
     var gameCurrentlyBeingPlayed;
     var getGameCurrentlyBeingPlayed = function () { return gameCurrentlyBeingPlayed; };
+    var setGameCurrentlyBeingPlayed = function (newGameBeingPlayed) { gameCurrentlyBeingPlayed = newGameBeingPlayed;    }
 
     var timeSinceLastGravity;
     var gravityTimerInterval = 175;
@@ -38,6 +40,7 @@ TetrisGame.Core = function () {
 
     function startNewGame() {
         TetrisGame.GameLoop.setGameActive(true);
+        
         
         dropTimeInterval = intialDropTimeInterval;
         playerLines = 0;
@@ -98,6 +101,7 @@ TetrisGame.Core = function () {
         }
 
         nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
+        turnOffAI();
         createCurrentPiece();
     }
 
@@ -326,7 +330,14 @@ TetrisGame.Core = function () {
         var curListOfBlocks = nextPiece.getListOfBlocks();
         for (var i = 0; i < curListOfBlocks.length; ++i) {
             if (board[curListOfBlocks[i].row][curListOfBlocks[i].col].filled === true) {
-                onLose();
+                if (!TetrisGame.GameLoop.isAttractModeOn())
+                    onLose();
+                else
+                {
+                    startNewGame();
+                    turnOnAI();
+                }
+                    
                 break;
             }
         }
@@ -410,7 +421,8 @@ TetrisGame.Core = function () {
 
         var maxSpeed = 250;
         var emitterSpecs = {
-            particlesPerSecond: 750,
+            //particlesPerSecond: 750,
+            particlesPerSecond: 250,
             x: block.col * TetrisGame.Renderer.colWidth + TetrisGame.Renderer.colWidth / 2,
             y: block.row * TetrisGame.Renderer.rowHeight + TetrisGame.Renderer.rowHeight / 2,
             minRadius: 4,
@@ -930,6 +942,7 @@ TetrisGame.Core = function () {
         turnOffAI: turnOffAI,
         turnOnAI: turnOnAI,
         startNewGame: startNewGame,
-        getGameCurrentlyBeingPlayed: getGameCurrentlyBeingPlayed
+        getGameCurrentlyBeingPlayed: getGameCurrentlyBeingPlayed,
+        setGameCurrentlyBeingPlayed: setGameCurrentlyBeingPlayed
     };
 }();

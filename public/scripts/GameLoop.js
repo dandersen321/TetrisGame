@@ -2,6 +2,9 @@
 TetrisGame.GameLoop = (function () {
     var lastTimeStamp = performance.now();
     var gameActive = false;
+    var timeSinceLastPlayerMove = 0;
+    var gameAttractModeInterval = 15000;
+    var attractModeActive = false;
 
     var setGameActive = function (newGameActive)
     {
@@ -24,6 +27,28 @@ TetrisGame.GameLoop = (function () {
         //oldGameState = gameState;
         gameLoop();
     };
+    
+    var isAttractModeOn = function () {
+        return attractModeActive;
+    }
+
+    var turnOffAttractMode = function () {
+        attractModeActive = false;
+        TetrisGame.Core.setGameCurrentlyBeingPlayed(false);
+        ScreenManager.changeToScreen(ScreenNames.GameMenu);
+        timeSinceLastPlayerMove = 0;
+        console.log("turning off attract mode");
+        document.getElementById("gameAIControlButton").style.display = "";
+    }
+
+    var startAttractMove = function () {
+        ScreenManager.changeToScreen(ScreenNames.GamePlaying, false);
+        //TetrisGame.Core.startNewGame();
+        TetrisGame.Core.turnOnAI();
+        attractModeActive = true;
+        document.getElementById("gameAIControlButton").style.display = "none";
+        
+    }
 
     var update = function (currentTimeStamp) {
         var elapsedTime = currentTimeStamp - lastTimeStamp;
@@ -33,7 +58,16 @@ TetrisGame.GameLoop = (function () {
         {
             TetrisGame.Core.update(elapsedTime);
         }
+        else {
+            timeSinceLastPlayerMove += elapsedTime;
+        }
+
+        if (attractModeActive === false && timeSinceLastPlayerMove >= gameAttractModeInterval) {
+            startAttractMove();
+        }
     };
+
+    
 
 
     var render = function () {
@@ -63,7 +97,9 @@ TetrisGame.GameLoop = (function () {
     return {
         intialize: intialize,
         setGameActive: setGameActive,
-        getGameActive: getGameActive
+        getGameActive: getGameActive,
+        isAttractModeOn: isAttractModeOn,
+        turnOffAttractMode: turnOffAttractMode
         //gameState: gameState,
         //GameState: GameState,
         //getGameState: getGameState,

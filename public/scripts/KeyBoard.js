@@ -9,11 +9,19 @@ var KeyBoard = (function () {
     {
         document.onkeydown = function (event) {
             keys[event.keyCode] = true; //the value here does not matter, it just matters the key exists
+
+            if (TetrisGame.GameLoop.isAttractModeOn() === true) {
+                TetrisGame.GameLoop.turnOffAttractMode();
+            }
         }
 
         document.onkeyup = function (event) {
             moveMadeThisPress = false;
             delete keys[event.keyCode];
+
+            if (TetrisGame.GameLoop.isAttractModeOn() === true) {
+                TetrisGame.GameLoop.turnOffAttractMode();
+            }
         }
     }
     listenForKeys();
@@ -415,3 +423,21 @@ var KeyCodes = {
 //});
 
 KeyBoard.intializeControls();
+
+var oldX = 0;
+var oldY = 0;
+document.onmousemove = function (event) {
+    console.log("mouse move");
+    console.log(Math.abs(event.clientX - oldX));
+    console.log(Math.abs(event.clientY - oldY));
+    try {
+        if (TetrisGame.GameLoop.isAttractModeOn() === true && (Math.abs(event.clientX - oldX) > 50 || Math.abs(event.clientY - oldY) > 50)) {
+            TetrisGame.GameLoop.turnOffAttractMode();
+            oldX = event.clientX;
+            oldY = event.clientY;
+        }
+    }
+    catch (e) {
+
+    }
+}
