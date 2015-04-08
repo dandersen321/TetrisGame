@@ -114,33 +114,33 @@ var ControlsScreen = function () {
     }
 
     var updateControls = function () {
-        var hardDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceHardDrop);
-        var softDropKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop);
-        var moveRightKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight);
-        var moveLeftKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft);
-        var rotateRightKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.rotatePieceRight);
-        var rotateLeftKeyCode = KeyBoard.getKeyCodeForFunction(TetrisGame.Core.rotatePieceLeft);
+        var hardDropKeyCode = KeyBoard.getKeyHardDrop();
+        var softDropKeyCode = KeyBoard.getKeySoftDrop();
+        var moveRightKeyCode = KeyBoard.getKeyMoveRight();
+        var moveLeftKeyCode = KeyBoard.getKeyMoveLeft();
+        var rotateRightKeyCode = KeyBoard.getKeyRotateRight();
+        var rotateLeftKeyCode = KeyBoard.getKeyRotateLeft();
 
         //var hardDropKeyName = KeyBoard.getKeyNameFromKeyCode(hardDropKeyCode);
 
-        var newInnerHTML = "<li>" + "Hard Drop: " + hardDropKeyCode +
-            "   <button onclick = \"KeyBoard.changeKeyCodeForFunction(TetrisGame.Core.currentPieceHardDrop)\">" +
+        var newInnerHTML = "<li>" + "Hard Drop: " + hardDropKeyCode + "</br>" +
+            "   <button onclick = \"KeyBoard.changeKeyHardDrop()\">" +
             "Change Key</button></li>";
-        newInnerHTML += "<li>" + "Soft Drop: " + softDropKeyCode +
-            "   <button onclick = \"KeyBoard.changeKeyCodeForFunction(TetrisGame.Core.currentPieceSoftDrop)\">" +
+        newInnerHTML += "<li>" + "Soft Drop: " + softDropKeyCode + "</br>" +
+            "   <button onclick = \"KeyBoard.changeKeySoftDrop()\">" +
             "Change Key</button></li>";
-        newInnerHTML += "<li>" + "Move Right: " + moveRightKeyCode +
-            "   <button onclick = \"KeyBoard.changeKeyCodeForFunction(TetrisGame.Core.currentPieceMoveRight)\">" +
+        newInnerHTML += "<li>" + "Move Right: " + moveRightKeyCode + "</br>" +
+            "   <button onclick = \"KeyBoard.changeKeyMoveRight()\">" +
             "Change Key</button></li>";
-        newInnerHTML += "<li>" + "Move Left: " + moveLeftKeyCode +
-            "   <button onclick = \"KeyBoard.changeKeyCodeForFunction(TetrisGame.Core.currentPieceMoveLeft)\">" +
+        newInnerHTML += "<li>" + "Move Left: " + moveLeftKeyCode + "</br>" +
+            "   <button onclick = \"KeyBoard.changeKeyMoveLeft()\">" +
             "Change Key</button></li>";
-        newInnerHTML += '<li>' + 'Rotate Right: ' + rotateRightKeyCode +
-            '   <button onclick = "KeyBoard.changeKeyCodeForFunction(TetrisGame.Core.rotatePieceRight)">' +
+        newInnerHTML += '<li>' + 'Rotate Right: ' + rotateRightKeyCode + "</br>" +
+            '   <button onclick = "KeyBoard.changeKeyRotateRight()">' +
             'Change Key</button></li>';
 
-        newInnerHTML += '<li>' + 'Rotate Left: ' + rotateLeftKeyCode +
-            '   <button onclick = "KeyBoard.changeKeyCodeForFunction(TetrisGame.Core.rotatePieceLeft)">' +
+        newInnerHTML += '<li>' + 'Rotate Left: ' + rotateLeftKeyCode + "</br>" +
+            '   <button onclick = "KeyBoard.changeKeyRotateLeft()">' +
             'Change Key</button></li>';
 
 

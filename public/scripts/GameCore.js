@@ -829,14 +829,14 @@ TetrisGame.Core = function () {
         timeSinceLastGravity += elapsedTime;
         Emitters.updateEmitters(elapsedTime);
 
-        for (var i = 0; i < listOfBlockPiecesOnBoard.length; ++i)
-        {
-            var curList = listOfBlockPiecesOnBoard[i];
-            for (var j = 0; j < curList.length; ++j) {
-                if (curList[j].row === undefined || board[curList[j].row][curList[j].col].filled === false)
-                    throw baby;
-            }
-        }
+        //for (var i = 0; i < listOfBlockPiecesOnBoard.length; ++i)
+        //{
+        //    var curList = listOfBlockPiecesOnBoard[i];
+        //    for (var j = 0; j < curList.length; ++j) {
+        //        if (curList[j].row === undefined || board[curList[j].row][curList[j].col].filled === false)
+        //            throw baby;
+        //    }
+        //}
 
         if (!currentPiece)
         {

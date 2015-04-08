@@ -82,7 +82,7 @@ var KeyBoard = (function () {
             }
             else
             {
-                alert(event.keyCode + " is currently in use, please select another one, NOOBCAKES!");
+                alert(getKeyGivenKeyCode(event.keyCode) + " is currently in use, please select another one, NOOBCAKES!");
             }
                 
         }
@@ -103,7 +103,7 @@ var KeyBoard = (function () {
         keyBoardFunctions[KeyCodes.W] = callRotateRight;
 
         for (var key in keyBoardFunctions) {
-            KeyBoard.registerEventWithHandler(key, keyBoardFunctions[key]);
+            KeyBoard.registerEventWithHandler(parseInt(key), keyBoardFunctions[key]);
         }
     }
 
@@ -171,6 +171,62 @@ var KeyBoard = (function () {
         
     }
 
+    var getKeyGivenKeyCode = function (keyCode) {
+        for (var key in KeyCodes) {
+            if (KeyCodes[key] === keyCode)
+                return key;
+        }
+        return "Press Any Key";
+    }
+
+    var getKeyHardDrop = function () {
+        return getKeyGivenKeyCode(getKeyCodeForFunction(callHardDrop));
+    }
+
+    var getKeySoftDrop = function () {
+        return getKeyGivenKeyCode(getKeyCodeForFunction(callSoftDrop));
+    }
+
+    var getKeyMoveRight = function () {
+        return getKeyGivenKeyCode(getKeyCodeForFunction(callMoveRight));
+    }
+
+    var getKeyMoveLeft = function () {
+        return getKeyGivenKeyCode(getKeyCodeForFunction(callMoveLeft));
+    }
+
+    var getKeyRotateRight = function () {
+        return getKeyGivenKeyCode(getKeyCodeForFunction(callRotateRight));
+    }
+
+    var getKeyRotateLeft = function () {
+        return getKeyGivenKeyCode(getKeyCodeForFunction(callRotateLeft));
+    }
+
+    var changeKeyHardDrop = function () {
+        changeKeyCodeForFunction(callHardDrop);
+    }
+
+    var changeKeySoftDrop = function () {
+        changeKeyCodeForFunction(callSoftDrop);
+    }
+
+    var changeKeyMoveRight = function () {
+        changeKeyCodeForFunction(callMoveRight);
+    }
+
+    var changeKeyMoveLeft = function () {
+        changeKeyCodeForFunction(callMoveLeft);
+    }
+
+    var changeKeyRotateRight = function () {
+        changeKeyCodeForFunction(callRotateRight);
+    }
+
+    var changeKeyRotateLeft = function () {
+        changeKeyCodeForFunction(callRotateLeft);
+    }
+
 
 
 
@@ -182,7 +238,19 @@ var KeyBoard = (function () {
         getKeyCodeForFunction: getKeyCodeForFunction,
         changeKeyCodeForFunction: changeKeyCodeForFunction,
         resetControls: resetControls,
-        intializeControls: intializeControls
+        intializeControls: intializeControls,
+        getKeyHardDrop: getKeyHardDrop,
+        getKeySoftDrop: getKeySoftDrop,
+        getKeyMoveRight: getKeyMoveRight,
+        getKeyMoveLeft: getKeyMoveLeft,
+        getKeyRotateRight: getKeyRotateRight,
+        getKeyRotateLeft: getKeyRotateLeft,
+        changeKeyHardDrop: changeKeyHardDrop,
+        changeKeySoftDrop: changeKeySoftDrop,
+        changeKeyMoveRight: changeKeyMoveRight,
+        changeKeyMoveLeft: changeKeyMoveLeft,
+        changeKeyRotateRight: changeKeyRotateRight,
+        changeKeyRotateLeft: changeKeyRotateLeft
     };
 
 
