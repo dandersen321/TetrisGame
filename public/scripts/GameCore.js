@@ -22,6 +22,8 @@ TetrisGame.Core = function () {
     var currentPiece = null;
     var nextPiece = null;
 
+    var ai_params;
+
     var gameCurrentlyBeingPlayed;
     var getGameCurrentlyBeingPlayed = function () { return gameCurrentlyBeingPlayed; };
 
@@ -34,6 +36,13 @@ TetrisGame.Core = function () {
         simulationMode = false;
         timeSinceLastComputerMove = 0;
         gameCurrentlyBeingPlayed = true;
+
+        ai_params = {
+            'aggregate_height': Math.random() * 100 - 50,
+            'holes': Math.random() * 100 - 50,
+            'bumpiness': Math.random() * 100 - 50,
+            'nbroken': Math.random() * 100 - 50
+        };
 
         bag = [];
 
@@ -399,7 +408,7 @@ TetrisGame.Core = function () {
 
     var onLose = function () {
 
-        var playerName = prompt("You lost with score: " + playerScore + ".\nPlease enter you name");
+        var playerName = 'AI-Sessamekesh';
         if (!playerName)
             playerName = "the nameless one";
         console.log(playerName +" lost with score " + playerScore);
@@ -409,9 +418,26 @@ TetrisGame.Core = function () {
         }).fail(function (jqxhr, text, err) {
             console.log('FAIL! ' + JSON.stringify(err));
         });
+
+        $.post('/api/ai-report-score', {
+            aggregate_height: ai_params.aggregate_height,
+            holes: ai_params.holes,
+            bumpiness: ai_params.bumpiness,
+            nbroken: ai_params.nbroken,
+            "score": playerScore }, function (data, status) {
+            console.log('Success. reporting AI behavior.');
+            console.log(JSON.stringify(data));
+        }).fail(function (jqxhr, text, err) {
+            console.log('Fail report - ' + text + ', ' + JSON.stringify(err));
+        });
+        console.log(JSON.stringify(ai_params));
         
         gameCurrentlyBeingPlayed = false;
         TetrisGame.GameLoop.setGameActive(false);
+
+        turnOffAI();
+        setTimeout(startNewGame, 1000);
+        setTimeout(turnOnAI, 2200);
     }
 
     //var updateUserTimers = function (elapsedTime) {
@@ -468,7 +494,7 @@ TetrisGame.Core = function () {
                     if (simulationLinesBroken > 0)
                         console.log("lines broken in sim: " + simulationLinesBroken);
 
-                    newScore = AI.getScore(board, simulationLinesBroken);
+                    newScore = AI.getScore(board, simulationLinesBroken, ai_params);
                 
                     //TetrisGame.Renderer.drawBoard(board);
                     //printState(boardClone);
@@ -624,21 +650,21 @@ TetrisGame.Core = function () {
         {
             TetrisGame.Renderer.drawPiece(currentPiece);
         }
-    }
+    };
 
     var turnOffAI = function () {
         computerPlaying = false;
         var AIControlButton = document.getElementById("gameAIControlButton");
         AIControlButton.innerHTML = "Turn on AI Control";
         AIControlButton.onclick = TetrisGame.Core.turnOnAI;
-    }
+    };
 
     var turnOnAI = function () {
         computerPlaying = true;
         var AIControlButton = document.getElementById("gameAIControlButton");
         AIControlButton.innerHTML = "Turn off AI Control";
         AIControlButton.onclick = TetrisGame.Core.turnOffAI;
-    }
+    };
 
 
     return {

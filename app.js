@@ -49,6 +49,27 @@ app.post('/api/high-scores', function (req, res) {
     });
 });
 
+app.post('/api/ai-report-score', function (req, res) {
+    fs.readFile(__dirname + '/ai.json', { encoding: 'utf-8' }, function (err, data) {
+        console.log('Data received - ' + JSON.stringify(req.body));
+        if (err) {
+            write(JSON.stringify({d: [req.body]}));
+        } else {
+            var t = JSON.parse(data).d;
+            t.push(req.body);
+            t = t.sort(function (a, b) { return parseFloat(b.score) - parseFloat(a.score); });
+            write(JSON.stringify({d: t}));
+        }
+    });
+
+    function write(contents) {
+        fs.writeFile(__dirname + '/ai.json', contents, { encoding: 'utf-8'}, function(err) {
+            if (err) res.status(500).send(err);
+            else res.send({'success': true});
+        });
+    };
+});
+
 app.listen(3000);
 
 console.log('Listening on port 3000...');

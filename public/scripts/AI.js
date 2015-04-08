@@ -1,6 +1,6 @@
 ﻿var AI = function () {
 
-    var getScore = function(board, nbroken) {
+    var getScore = function(board, nbroken, ai_params) {
 
         // AI algorithm: http://totologic.blogspot.com/2013/03/tetris-ai-explained.html
         var aggregate_height = 0,
@@ -39,10 +39,10 @@
             }
         }
 
-        return Math.floor(aggregate_height * 0.66569
-            + holes * 0.46544
-            + bumpiness * 0.24077
-            + nbroken * -0.8999) * 300;
+        return Math.floor(aggregate_height * ai_params.aggregate_height
+            + holes * ai_params.holes
+            + bumpiness * ai_params.bumpiness
+            + nbroken * ai_params.nbroken) * 300;
     };
 
     return {

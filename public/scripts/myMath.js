@@ -25,7 +25,7 @@ myMath.randomizeSign = function (number) {
         return number * -1;
 };
 
-myMath.getRandomFloats = (function(n) {
+myMath.getRandomFloats = function(n) {
     var tr = [];
     for (var i = 0; i < n; ++i) {
         tr.push(Math.random() * 77);
@@ -33,4 +33,4 @@ myMath.getRandomFloats = (function(n) {
     return function () {
         return tr;
     };
-})(5);
+};
