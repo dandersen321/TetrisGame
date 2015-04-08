@@ -38,10 +38,10 @@ TetrisGame.Core = function () {
         gameCurrentlyBeingPlayed = true;
 
         ai_params = {
-            'aggregate_height': Math.random() * 100 - 50,
-            'holes': Math.random() * 100 - 50,
+            'aggregate_height': Math.random() * 100,
+            'holes': Math.random() * 100,
             'bumpiness': Math.random() * 100 - 50,
-            'nbroken': Math.random() * 100 - 50
+            'nbroken': Math.random() * 100 - 85
         };
 
         bag = [];
@@ -301,17 +301,17 @@ TetrisGame.Core = function () {
 
         if(linesBroken === 1)
         {
-            playerScore += 40;
+            playerScore += 1;
         }
         else if(linesBroken === 2)
         {
-            playerScore += 100;
+            playerScore += 1;
         }
         else if (linesBroken === 3) {
-            playerScore += 300;
+            playerScore += 1;
         }
         else if(linesBroken === 4) {
-            playerScore += 1200;
+            playerScore += 1;
         }
 
     }
