@@ -286,6 +286,30 @@ TetrisGame.Core = function () {
         currentPiece = nextPiece;
         nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
 
+        var k = k || 0;
+        k += 1;
+        if (k > 50) {
+            document.getElementById('aud_toy_with_mortal').play();
+            k -= 50;
+        }
+
+        if (currentPiece) {
+            if(currentPiece.getType() == 'I') {
+                document.getElementById('aud_line').play();
+            } else if (currentPiece.getType() == 'O') {
+                document.getElementById('aud_square').play();
+            } else if (currentPiece.getType() == 'L') {
+                document.getElementById('aud_lblock').play();
+            } else if (currentPiece.getType() == 'J') {
+                document.getElementById('aud_rlblock').play();
+            } else if (currentPiece.getType() == 'S') {
+                document.getElementById('aud_squig').play();
+            } else if (currentPiece.getType() == 'Z') {
+                document.getElementById('aud_rsquig').play();
+            } else if (currentPiece.getType() == 'T') {
+                document.getElementById('aud_tblock').play();
+            }
+        }
 
         var curListOfBlocks = nextPiece.getListOfBlocks();
         for (var i = 0; i < curListOfBlocks.length; ++i) {
@@ -299,10 +323,12 @@ TetrisGame.Core = function () {
 
     var transferCurrentPieceToBoard = function () {
         var curListOfBlocks = currentPiece.getListOfBlocks();
+
         for (var i = 0; i < curListOfBlocks.length; ++i) {
             board[curListOfBlocks[i].row][curListOfBlocks[i].col] = curListOfBlocks[i];
         }
         listOfBlockPiecesOnBoard.push(currentPiece.getListOfBlocks());
+
         currentPiece = null;
 
         
@@ -831,6 +857,13 @@ TetrisGame.Core = function () {
 
     var turnOffAI = function () {
         document.getElementById("aud_tetris_theme").playbackRate = 1.0;
+        document.getElementById("aud_lblock").playbackRate = 1.0;
+        document.getElementById("aud_line").playbackRate = 1.0;
+        document.getElementById("aud_rsquig").playbackRate = 1.0;
+        document.getElementById("aud_rlblock").playbackRate = 1.0;
+        document.getElementById("aud_square").playbackRate = 1.0;
+        document.getElementById("aud_squig").playbackRate = 1.0;
+        document.getElementById("aud_tblock").playbackRate = 1.0;
         computerPlaying = false;
         var AIControlButton = document.getElementById("gameAIControlButton");
         AIControlButton.innerHTML = "Turn on AI Control";
@@ -838,7 +871,14 @@ TetrisGame.Core = function () {
     }
 
     var turnOnAI = function () {
-        document.getElementById("aud_tetris_theme").playbackRate = 1.35;
+        document.getElementById("aud_tetris_theme").playbackRate = 1.25;
+        document.getElementById("aud_lblock").playbackRate = 2.0;
+        document.getElementById("aud_line").playbackRate = 2.0;
+        document.getElementById("aud_rsquig").playbackRate = 1.2;
+        document.getElementById("aud_rlblock").playbackRate = 2.0;
+        document.getElementById("aud_square").playbackRate = 2.0;
+        document.getElementById("aud_squig").playbackRate = 1.2;
+        document.getElementById("aud_tblock").playbackRate = 2.0;
         computerPlaying = true;
         var AIControlButton = document.getElementById("gameAIControlButton");
         AIControlButton.innerHTML = "Turn off AI Control";

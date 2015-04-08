@@ -7,12 +7,17 @@
 
     var currentPieceId = 0;
 
-    var newBrick = function (newListOfBlocks) {
+    var newBrick = function (newListOfBlocks, type) {
         var rotation;
         var listOfBlocks = newListOfBlocks;
         var r = boardRows - 2, c = bottomLeftCol;
         var piece = currentPieceId;
         currentPieceId++;
+        var t = type;
+
+        var getType = function () {
+            return t;
+        }
 
         var moveLeft = function () {
             c -= 1;
@@ -85,7 +90,8 @@
             getListOfBlocks: getListOfBlocks,
             moveDown: moveDown,
             clone: clone,
-            currentPieceId: currentPieceId
+            currentPieceId: currentPieceId,
+            getType: getType
         };
     }
 
@@ -96,7 +102,7 @@
         listOfBlocks.push(Blocks.newBlock(0, 0, Textures.L, true));
         listOfBlocks.push(Blocks.newBlock(1, 0, Textures.L, true));
 
-        return newBrick(listOfBlocks);
+        return newBrick(listOfBlocks, 'L');
     };
 
     var newReverseLBlock = function () {
@@ -107,7 +113,7 @@
         listOfBlocks.push(Blocks.newBlock(1, 0, Textures.ReverseL, true));
         listOfBlocks.push(Blocks.newBlock(0, 0, Textures.ReverseL, true));
 
-        return newBrick(listOfBlocks);
+        return newBrick(listOfBlocks, 'J');
     }
 
     var newTBlock = function () {
@@ -116,7 +122,7 @@
             Blocks.newBlock(-1, 0, Textures.T, true),
             Blocks.newBlock(1, 0, Textures.T, true),
             Blocks.newBlock(0, 1, Textures.T, true)
-        ]);
+        ], 'T');
     };
 
     var newSquiggly = function () {
@@ -125,7 +131,7 @@
             Blocks.newBlock(0, 0, Textures.S, true),
             Blocks.newBlock(0, 1, Textures.S, true),
             Blocks.newBlock(1, 1, Textures.S, true)
-        ]);
+        ], 'S');
     }
 
     var newReverseSquiggly = function () {
@@ -134,7 +140,7 @@
             Blocks.newBlock(0, 0, Textures.ReverseS, true),
             Blocks.newBlock(0, 1, Textures.ReverseS, true),
             Blocks.newBlock(-1, -1, Textures.ReverseS, true)
-        ]);
+        ], 'Z');
     }
 
     var newSquare = function () {
@@ -143,7 +149,7 @@
             Blocks.newBlock(0, 1, Textures.Square, true),
             Blocks.newBlock(1, 1, Textures.Square, true),
             Blocks.newBlock(1, 0, Textures.Square, true)
-        ]);
+        ], 'O');
     }
 
     var newStraight = function () {
@@ -152,7 +158,7 @@
             Blocks.newBlock(-2, 0, Textures.Line, true),
             Blocks.newBlock(0, 0, Textures.Line, true),
             Blocks.newBlock(1, 0, Textures.Line, true)
-        ]);
+        ], 'I');
     }    
 
     return {

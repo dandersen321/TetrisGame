@@ -8,6 +8,7 @@ TetrisGame.GameLoop = (function () {
         gameActive = newGameActive;
         if (newGameActive) {
             document.getElementById("aud_tetris_theme").play();
+            document.getElementById("aud_tetris_theme").volume = 0.3;
         } else {
             document.getElementById("aud_tetris_theme").pause();
         }
