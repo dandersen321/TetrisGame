@@ -126,8 +126,6 @@ TetrisGame.Core = function () {
         bag.push(TetrisPieces.newStraight());
         bag.push(TetrisPieces.newStraight());
     }
-
-
    
 
     //var shouldPieceBeMovedByUser = function (UserTimers.moveLeft.timeSinceLastUserMove) {
@@ -832,6 +830,7 @@ TetrisGame.Core = function () {
     }
 
     var turnOffAI = function () {
+        document.getElementById("aud_tetris_theme").playbackRate = 1.0;
         computerPlaying = false;
         var AIControlButton = document.getElementById("gameAIControlButton");
         AIControlButton.innerHTML = "Turn on AI Control";
@@ -839,6 +838,7 @@ TetrisGame.Core = function () {
     }
 
     var turnOnAI = function () {
+        document.getElementById("aud_tetris_theme").playbackRate = 1.35;
         computerPlaying = true;
         var AIControlButton = document.getElementById("gameAIControlButton");
         AIControlButton.innerHTML = "Turn off AI Control";

@@ -6,6 +6,11 @@ TetrisGame.GameLoop = (function () {
     var setGameActive = function (newGameActive)
     {
         gameActive = newGameActive;
+        if (newGameActive) {
+            document.getElementById("aud_tetris_theme").play();
+        } else {
+            document.getElementById("aud_tetris_theme").pause();
+        }
     };
     var getGameActive = function () { return gameActive; };
     //var gameState;
