@@ -369,6 +369,20 @@ TetrisGame.Core = function () {
             level = maxLevels;
         dropTimeInterval = intialDropTimeInterval - maxLevelTimeIntervalDifficulty * (level / maxLevels);
 
+        if (linesBroken > 0)
+        {
+            var audio = document.getElementById('aud_blast');
+            if (audio.duration > 0 && !audio.paused) {
+                audio.pause();
+                audio.currentTime = 0;
+                audio.play();
+            }
+            else {
+                audio.play();
+            }
+        }
+            
+
         if(linesBroken === 1)
         {
             playerScore += 40;
