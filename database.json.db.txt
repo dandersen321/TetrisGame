@@ -1,1 +1,1 @@
-{"d":[{"name":"Kamaron - AI","score":"5440"},{"name":"the nameless one","score":"4680"},{"name":"Kamaron - AI","score":"4640"},{"name":"Kamaron - AI","score":"4400"},{"name":"Sessamekesh","score":"4380"}]}
+{"d":[{"name":"the nameless one","score":"17960"},{"name":"DylanIsDefinatelyTheBest","score":"10660"},{"name":"DylanIsTheBest!","score":"5460"},{"name":"Kamaron - AI","score":"5440"},{"name":"the nameless one","score":"4680"}]}

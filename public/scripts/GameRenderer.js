@@ -44,7 +44,7 @@
     var message6y = message5y + 35;
 
 
-    var gradient = context.createLinearGradient(message1x, message1y, message4x, message4y);
+    var gradient = context.createLinearGradient(message1x, message1y, message6x, message6y);
     gradient.addColorStop("0", "red");
     gradient.addColorStop("1.0", "blue");
     gameUpdateContext.fillStyle = gradient;
@@ -105,7 +105,7 @@
             var emitterListOfParticles = listOfCurrentEmitters[i].getListOfParticles();
 
             for (var j = 0; j < emitterListOfParticles.length; ++j) {
-                    ObjectPainter.drawObj(emitterListOfParticles[j], context, canvas.height);
+                    ObjectPainter.drawObj(emitterListOfParticles[j], context, canvas.height, canvas.width);
             }
 
         }

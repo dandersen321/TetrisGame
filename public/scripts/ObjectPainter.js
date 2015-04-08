@@ -11,7 +11,7 @@
             return 4;
     }
 
-    function drawObj(obj, context, height) {
+    function drawObj(obj, context, height, width) {
 
         context.save();
 
@@ -42,7 +42,24 @@
         //context.translate(-objX, -objY);
 
         //context.drawImage(obj.image, obj.getX() - obj.getWidth() / 2, height - obj.getY() - obj.getHeight() / 2, obj.getWidth(), obj.getHeight());
-        context.drawImage(obj.image, objX - obj.getWidth() / 2, objY + obj.getHeight() / 2, obj.getWidth(), obj.getHeight());
+        //objX = 100;
+        //objY = 200;
+
+
+
+
+        try {
+            //context.rect(0, 0, 200, 200);
+            //context.stroke();
+            context.drawImage(obj.image, objX - obj.getWidth() / 2, objY + obj.getHeight() / 2, Math.abs(obj.getWidth()), Math.abs(obj.getHeight()));
+        }
+        catch (e) {
+            console.error(e);
+            console.log(objX - obj.getWidth() / 2);
+            console.log(objY + obj.getHeight() / 2);
+            console.log("width: " + width);
+            console.log("height: " + height);
+        }
         //context.drawImage(obj.image, obj.getX() - obj.getWidth() / 2, height - 20 / 2, 5, 5);
 
 
