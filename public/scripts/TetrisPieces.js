@@ -5,10 +5,14 @@
     var boardMiddleCol = boardCols / 2;
     var bottomLeftCol = boardMiddleCol - 2;
 
+    var currentPieceId = 0;
+
     var newBrick = function (newListOfBlocks) {
         var rotation;
         var listOfBlocks = newListOfBlocks;
         var r = boardRows - 2, c = bottomLeftCol;
+        var piece = currentPieceId;
+        currentPieceId++;
 
         var moveLeft = function () {
             c -= 1;
@@ -39,6 +43,8 @@
 
         var moveDown = function () {
             r -= 1;
+            //for (var i = 0; i < listOfBlocks.length; i++)
+            //    listOfBlocks[i].row--;
         }
 
         var rotateLeft = function () {
@@ -78,7 +84,8 @@
             rotateLeft: rotateLeft,
             getListOfBlocks: getListOfBlocks,
             moveDown: moveDown,
-            clone: clone
+            clone: clone,
+            currentPieceId: currentPieceId
         };
     }
 
