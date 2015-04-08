@@ -11,14 +11,18 @@ TetrisGame.Core = function () {
     var computerMove;
     var simulationMode;
     var simulationLinesBroken;
-    var computerSpeed = 200; //computer can make a move every X ms
+    var computerSpeed = 50; //computer can make a move every X ms
     var timeSinceLastComputerMove;
     var k = 0;
 
     var bag = [];
 
     var timeSinceLastDrop;
-    var dropTimeInterval = 1000;
+    var intialDropTimeInterval = 1000;
+    var dropTimeInterval;
+    var level;
+    var maxLevels = 20;
+    var maxLevelTimeIntervalDifficulty = 800;
 
     var board;
     var listOfBlockPiecesOnBoard;
@@ -35,13 +39,16 @@ TetrisGame.Core = function () {
     function startNewGame() {
         TetrisGame.GameLoop.setGameActive(true);
         
+        dropTimeInterval = intialDropTimeInterval;
         playerLines = 0;
         playerScore = 0;
+        currentPiece = null;
         computerPlaying = false;
         computerMove = null;
         simulationMode = false;
         timeSinceLastComputerMove = 0;
         gameCurrentlyBeingPlayed = true;
+        level = 0;
 
         bag = [];
 
@@ -346,6 +353,11 @@ TetrisGame.Core = function () {
         }
             
         playerLines += linesBroken;
+        level = parseInt(playerLines / 5);
+        if (level > maxLevels)
+            level = maxLevels;
+        dropTimeInterval = intialDropTimeInterval - maxLevelTimeIntervalDifficulty * (level / maxLevels);
+
         if(linesBroken === 1)
         {
             playerScore += 40;
@@ -826,7 +838,7 @@ TetrisGame.Core = function () {
             }
         }
 
-        if (currentPiece === null)
+        if (!currentPiece)
         {
             computerMove = null;
             createCurrentPiece();
@@ -863,7 +875,7 @@ TetrisGame.Core = function () {
     {
         //console.log("tetris game rendering!");
         TetrisGame.Renderer.drawBoard(board);
-        TetrisGame.Renderer.drawUpdated(nextPiece, playerScore, playerLines);
+        TetrisGame.Renderer.drawUpdated(nextPiece, playerScore, playerLines, level);
         TetrisGame.Renderer.drawParticles();
         
 

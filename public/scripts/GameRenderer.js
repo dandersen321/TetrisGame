@@ -37,6 +37,12 @@
     var message4x = message2x;
     var message4y = message3y + 35;
 
+    var message5x = message2x;
+    var message5y = message4y + 35;
+
+    var message6x = message2x;
+    var message6y = message5y + 35;
+
 
     var gradient = context.createLinearGradient(message1x, message1y, message4x, message4y);
     gradient.addColorStop("0", "red");
@@ -45,10 +51,10 @@
 
     var nextPieceLeftMargin = 30;
     var nextPieceTopMargin = 30;
-    var drawUpdated = function(nextPiece, score, linesBroken){
+    var drawUpdated = function(nextPiece, score, linesBroken, level){
         gameUpdateContext.clear();
         drawNextPiece(nextPiece);
-        drawScore(score, linesBroken);
+        drawScore(score, linesBroken, level);
     }
 
     var drawNextPiece = function (tetrisPiece) {
@@ -60,11 +66,13 @@
         }
     }
 
-    function drawScore(score, linesBroken) {
+    function drawScore(score, linesBroken, level) {
         gameUpdateContext.fillText("Score", message1x, message1y);
         gameUpdateContext.fillText(score, message2x, message2y);
         gameUpdateContext.fillText("Lines Broken", message3x, message3y);
         gameUpdateContext.fillText(linesBroken, message4x, message4y);
+        gameUpdateContext.fillText("Level", message5x, message5y);
+        gameUpdateContext.fillText(level, message6x, message6y);
     }
 
     var drawBoard = function (board) {
