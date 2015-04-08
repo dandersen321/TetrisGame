@@ -29,7 +29,7 @@ TetrisGame.Core = function () {
     var getGameCurrentlyBeingPlayed = function () { return gameCurrentlyBeingPlayed; };
 
     var timeSinceLastGravity;
-    var gravityTimerInterval = 50;
+    var gravityTimerInterval = 175;
     var gravityNeedsToBeChecked;
 
     function startNewGame() {
@@ -74,15 +74,20 @@ TetrisGame.Core = function () {
 
         listOfBlockPiecesOnBoard = new Array();
         listOfBlockPiecesOnBoard.clone = function () {
-            var newList = new Array(listOfBlockPiecesOnBoard.length);
+            var newList = new Array(this.length);
             for(var i = 0; i < newList.length; ++i)
             {
-                newList[i] = Blocks.newBlock(listOfBlockPiecesOnBoard[i].row, listOfBlockPiecesOnBoard[i].col,
-                    listOfBlockPiecesOnBoard[i].texture, listOfBlockPiecesOnBoard[i].filled, listOfBlockPiecesOnBoard[i].attached);
+                newList[i] = new Array(this[i].length);
+                for (var j = 0; j < this[i].length; ++j)
+                {
+                    newList[i][j] = Blocks.newBlock(this[i][j].row, this[i][j].col,
+                    this[i][j].texture, this[i][j].filled, this[i][j].attached);
+                }
+                    
             }
 
             newList.clone = this.clone;
-            return listOfBlockPiecesOnBoard;
+            return newList;
         }
 
         nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
@@ -671,6 +676,7 @@ TetrisGame.Core = function () {
 
     function findComputerMoveUsingAI() {
         var boardClone = board.clone();
+        var listOfBlockPiecesOnBoardClone = listOfBlockPiecesOnBoard.clone();
         var currentPieceClone = currentPiece.clone();
         var maxScore = Number.MAX_VALUE;
         var maxMove = null;
@@ -683,6 +689,7 @@ TetrisGame.Core = function () {
             {
                 for (var c = 0; c < boardCols; ++c) {
                     board = boardClone.clone();
+                    listOfBlockPiecesOnBoard = listOfBlockPiecesOnBoardClone.clone();
                     currentPiece = currentPieceClone.clone();
                     canMakeMove = createPotentialBoard(r, c);
                     if (canMakeMove === false)
@@ -717,6 +724,7 @@ TetrisGame.Core = function () {
             }
 
             board = boardClone.clone();
+            listOfBlockPiecesOnBoard = listOfBlockPiecesOnBoardClone.clone();
             currentPiece = currentPieceClone.clone();
             rotateCurrentPieceNTimes(maxMove.numOfRotations);
             simulationMode = false;
@@ -727,6 +735,7 @@ TetrisGame.Core = function () {
             console.error(e);
             computerMove = null;
             board = boardClone.clone();
+            listOfBlockPiecesOnBoard = listOfBlockPiecesOnBoardClone.clone();
             currentPiece = currentPieceClone.clone();
             simulationMode = false;
         }
@@ -807,6 +816,15 @@ TetrisGame.Core = function () {
         timeSinceLastComputerMove += elapsedTime;
         timeSinceLastGravity += elapsedTime;
         Emitters.updateEmitters(elapsedTime);
+
+        for (var i = 0; i < listOfBlockPiecesOnBoard.length; ++i)
+        {
+            var curList = listOfBlockPiecesOnBoard[i];
+            for (var j = 0; j < curList.length; ++j) {
+                if (curList[j].row === undefined || board[curList[j].row][curList[j].col].filled === false)
+                    throw baby;
+            }
+        }
 
         if (currentPiece === null)
         {
