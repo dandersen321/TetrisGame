@@ -35,7 +35,7 @@ TetrisGame.Core = function () {
     var setGameCurrentlyBeingPlayed = function (newGameBeingPlayed) { gameCurrentlyBeingPlayed = newGameBeingPlayed;    }
 
     var timeSinceLastGravity;
-    var gravityTimerInterval = 175;
+    var gravityTimerInterval = 100;
     var gravityNeedsToBeChecked;
 
     function startNewGame() {
@@ -223,7 +223,7 @@ TetrisGame.Core = function () {
         var listOfBlocks = currentPiece.getListOfBlocks();
         for(var i = 0; i < listOfBlocks.length; ++i)
         {
-            if (listOfBlocks[i].row < 0 || listOfBlocks[i].row >= boardRows || listOfBlocks[i].col < 0 || listOfBlocks[i].col > boardCols)
+            if (listOfBlocks[i].row < 0 || listOfBlocks[i].row >= boardRows || listOfBlocks[i].col < 0 || listOfBlocks[i].col >= boardCols)
                 return false;
         }
 
@@ -243,7 +243,7 @@ TetrisGame.Core = function () {
         currentPiece.rotateLeft();
         if (!validRotation())
         {
-            currentPiece = currentPieceClone;
+            currentPiece = currentPieceClone.clone();
             return false;
         }
         //console.log("rotating left");
@@ -264,7 +264,7 @@ TetrisGame.Core = function () {
         var currentPieceClone = currentPiece.clone();
         currentPiece.rotateRight();
         if (!validRotation()) {
-            currentPiece = currentPieceClone;
+            currentPiece = currentPieceClone.clone();
             return false;
         }
         if (currentPiece == null)
@@ -372,14 +372,8 @@ TetrisGame.Core = function () {
         if (linesBroken > 0)
         {
             var audio = document.getElementById('aud_blast');
-            if (audio.duration > 0 && !audio.paused) {
-                audio.pause();
-                audio.currentTime = 0;
-                audio.play();
-            }
-            else {
-                audio.play();
-            }
+            audio.playbackRate = 3.0;
+            audio.play();
         }
             
 

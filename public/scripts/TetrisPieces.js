@@ -3,7 +3,7 @@
     var boardRows = TetrisGame.Core.getNumberOfBoardRows();
     var boardCols = TetrisGame.Core.getNumberOfBoardCols();
     var boardMiddleCol = boardCols / 2;
-    var bottomLeftCol = boardMiddleCol - 2;
+    var bottomLeftCol = boardMiddleCol - 1;
 
     var currentPieceId = 0;
 
@@ -11,6 +11,10 @@
         var rotation;
         var listOfBlocks = newListOfBlocks;
         var r = boardRows - 2, c = bottomLeftCol;
+        var getR = function () { return r; }
+        var getC = function () { return c; }
+        var setR = function (newR) { r = newR; };
+        var setC = function (newC) { c = newC; };
         var piece = currentPieceId;
         currentPieceId++;
         var t = type;
@@ -29,13 +33,13 @@
             //console.log("moving right");
         }
 
-        var softDrop = function () {
-            //console.log("soft drop");
-        }
+        //var softDrop = function () {
+        //    //console.log("soft drop");
+        //}
 
-        var hardDrop = function () {
-            //console.log("hard drop");
-        }
+        //var hardDrop = function () {
+        //    //console.log("hard drop");
+        //}
 
         var rotateRight = function () {
             for (var i = 0; i < listOfBlocks.length; i++) {
@@ -75,7 +79,10 @@
             {
                 newListOfBlocks[i] = Blocks.newBlock(listOfBlocks[i].row, listOfBlocks[i].col, listOfBlocks[i].texture, listOfBlocks[i].filled);
             }
-            return newBrick(newListOfBlocks);
+            var that = newBrick(newListOfBlocks);
+            that.setR(this.getR());
+            that.setC(this.getC());
+            return that;
 
         }
 
@@ -83,15 +90,19 @@
             listOfBlocks: listOfBlocks,
             moveLeft: moveLeft,
             moveRight: moveRight,
-            softDrop: softDrop,
-            hardDrop: hardDrop,
+            //softDrop: softDrop,
+            //hardDrop: hardDrop,
             rotateRight: rotateRight,
             rotateLeft: rotateLeft,
             getListOfBlocks: getListOfBlocks,
             moveDown: moveDown,
             clone: clone,
             currentPieceId: currentPieceId,
-            getType: getType
+            getType: getType,
+            getR: getR,
+            getC: getC,
+            setR: setR,
+            setC: setC
         };
     }
 
