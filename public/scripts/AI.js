@@ -38,11 +38,10 @@
                 }
             }
         }
-
-        return Math.floor(aggregate_height * 0.66569
-            + holes * 0.46544
-            + bumpiness * 0.24077
-            + nbroken * -0.8999) * 300;
+        return Math.floor(aggregate_height * 32.668523862957954
+            + holes * 47.05753012094647
+            + bumpiness * 2.8729772428050637
+            + nbroken * -46.47365980781615) * 300;
     };
 
     return {
