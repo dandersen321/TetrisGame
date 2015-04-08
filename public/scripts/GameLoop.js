@@ -3,8 +3,8 @@ TetrisGame.GameLoop = (function () {
     var lastTimeStamp = performance.now();
     var gameActive = false;
     var timeSinceLastPlayerMove = 0;
-    //var gameAttractModeInterval = 10000;
-    var gameAttractModeInterval = 999999999;
+    var gameAttractModeInterval = 10000;
+    //var gameAttractModeInterval = 999999999;
     var attractModeActive = false;
 
     var setGameActive = function (newGameActive)

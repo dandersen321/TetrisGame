@@ -603,6 +603,19 @@ TetrisGame.Core = function () {
     }
 
     var doGravity = function () {
+
+
+        for (var i = 0; i < listOfBlockPiecesOnBoard.length; ++i) {
+            var currentListOfBlocks = listOfBlockPiecesOnBoard[i];
+            if (currentListOfBlocks.length < 4) {
+                for (var j = 0; j < currentListOfBlocks.length; ++j) {
+                    board[currentListOfBlocks[j].row][currentListOfBlocks[j].col].attached = false;
+                }
+            }
+
+
+        } //end of gravity for loop
+
         var destructionMade = false;
         for (var r = 1; r < boardRows; ++r) {
             for (var c = 0; c < boardCols; ++c) {
@@ -630,9 +643,9 @@ TetrisGame.Core = function () {
             }
         }
 
-        if (destructionMade === false)
-            gravityNeedsToBeChecked = false;
-        else
+        //if (destructionMade === false && simulationMode === false)
+        //    gravityNeedsToBeChecked = false;
+        //else
             timeSinceLastGravity = 0;
 
         var linesBroken = handleBreakingLines(0);
