@@ -13,6 +13,7 @@ TetrisGame.Core = function () {
     var simulationLinesBroken;
     var computerSpeed = 200; //computer can make a move every X ms
     var timeSinceLastComputerMove;
+    var k = 0;
 
     var bag = [];
 
@@ -286,7 +287,6 @@ TetrisGame.Core = function () {
         currentPiece = nextPiece;
         nextPiece = bag.splice(Math.floor(Math.random() * bag.length), 1)[0];
 
-        var k = k || 0;
         k += 1;
         if (k > 50) {
             document.getElementById('aud_toy_with_mortal').play();
