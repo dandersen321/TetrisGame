@@ -1,1 +1,1 @@
-{"d":[{"name":"Sessamekesh","score":"4380"},{"name":"The best AI so far....","score":"3880"},{"name":"Kamaron is great","score":"2100"},{"name":"the nameless one","score":"1920"},{"name":"Sessamekesh","score":"1680"}]}
+{"d":[{"name":"Sessamekesh","score":"4380"},{"name":"The best AI so far....","score":"3880"},{"name":"the nameless one","score":"2480"},{"name":"Kamaron is great","score":"2100"},{"name":"the nameless one","score":"1920"}]}

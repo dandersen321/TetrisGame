@@ -25,23 +25,30 @@
     gameUpdateContext.font = "30px Arial";
 
     var messageWidth = 100;
-    var x0FirstMessage = gameUpdateCanvas.width / 2 - messageWidth/2;
-    var y0FirstMessage = gameUpdateCanvas.height / 2 - messageWidth/2;
+    var message1x = gameUpdateCanvas.width / 2 - messageWidth/2 - 35;
+    var message1y = gameUpdateCanvas.height / 2 - messageWidth/2 - 50;
 
-    var x0SecondMessage = gameUpdateCanvas.width / 2 - messageWidth/2;
-    var y0SecondMessage = gameUpdateCanvas.height / 2;
+    var message2x = message1x;
+    var message2y = message1y + 35;
 
-    var gradient = context.createLinearGradient(x0FirstMessage, y0FirstMessage, x0SecondMessage, y0SecondMessage);
+    var message3x = message2x;
+    var message3y = message2y + 35;
+
+    var message4x = message2x;
+    var message4y = message3y + 35;
+
+
+    var gradient = context.createLinearGradient(message1x, message1y, message4x, message4y);
     gradient.addColorStop("0", "red");
     gradient.addColorStop("1.0", "blue");
     gameUpdateContext.fillStyle = gradient;
 
     var nextPieceLeftMargin = 30;
     var nextPieceTopMargin = 30;
-    var drawUpdated = function(nextPiece, score){
+    var drawUpdated = function(nextPiece, score, linesBroken){
         gameUpdateContext.clear();
         drawNextPiece(nextPiece);
-        drawScore(score);
+        drawScore(score, linesBroken);
     }
 
     var drawNextPiece = function (tetrisPiece) {
@@ -53,9 +60,11 @@
         }
     }
 
-    function drawScore(score) {
-        gameUpdateContext.fillText("Score", x0FirstMessage, y0FirstMessage);
-        gameUpdateContext.fillText(score, x0SecondMessage, y0SecondMessage);
+    function drawScore(score, linesBroken) {
+        gameUpdateContext.fillText("Score", message1x, message1y);
+        gameUpdateContext.fillText(score, message2x, message2y);
+        gameUpdateContext.fillText("Lines Broken", message3x, message3y);
+        gameUpdateContext.fillText(linesBroken, message4x, message4y);
     }
 
     var drawBoard = function (board) {

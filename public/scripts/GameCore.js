@@ -6,6 +6,7 @@ TetrisGame.Core = function () {
     var getNumberOfBoardCols = function () { return boardCols; };
 
     var playerScore;
+    var playerLines;
     var computerPlaying;
     var computerMove;
     var simulationMode;
@@ -28,6 +29,7 @@ TetrisGame.Core = function () {
     function startNewGame() {
         TetrisGame.GameLoop.setGameActive(true);
         
+        playerLines = 0;
         playerScore = 0;
         computerPlaying = false;
         computerMove = null;
@@ -289,7 +291,7 @@ TetrisGame.Core = function () {
             return;
         }
             
-
+        playerLines += linesBroken;
         if(linesBroken === 1)
         {
             playerScore += 40;
@@ -616,7 +618,7 @@ TetrisGame.Core = function () {
     {
         //console.log("tetris game rendering!");
         TetrisGame.Renderer.drawBoard(board);
-        TetrisGame.Renderer.drawUpdated(nextPiece, playerScore);
+        TetrisGame.Renderer.drawUpdated(nextPiece, playerScore, playerLines);
         TetrisGame.Renderer.drawParticles();
         
 
